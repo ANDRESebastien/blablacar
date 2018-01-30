@@ -1,4 +1,4 @@
-package fr.blablacar.table;
+package fr.blablacar.bean;
 
 public class Ville {
 	private long idVille;

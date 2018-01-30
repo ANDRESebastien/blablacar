@@ -1,4 +1,4 @@
-package fr.blablacar.table;
+package fr.blablacar.bean;
 
 import java.sql.Date;
 import java.sql.Time;

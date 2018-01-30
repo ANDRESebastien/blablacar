@@ -1,16 +1,49 @@
-package fr.blablacar.table;
+package fr.blablacar.bean;
 
-import java.sql.Date;
+import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+//import lombok.Data;
+//@Data
+
+@Entity
 public class Personne {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idPersonne;
-	private String motDePasse;
-	private String nom;
-	private String prenom;
-	private Date dateDeNaissance;
+
+	@NotBlank
 	private String email;
+
+	@NotBlank
+	private String motDePasse;
+
+	@NotBlank
+	private String nom;
+
+	@NotBlank
+	private String prenom;
+
+	@NotBlank
+	@Temporal(TemporalType.DATE)
+	private Date dateDeNaissance;
+
 	private double note;
 	private boolean authentifie;
+
+	public Personne() {
+		this.note = -1;
+		this.authentifie = false;
+	}
 
 	public long getIdPersonne() {
 		return idPersonne;
@@ -18,6 +51,14 @@ public class Personne {
 
 	public void setIdPersonne(long idPersonne) {
 		this.idPersonne = idPersonne;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getMotDePasse() {
@@ -52,14 +93,6 @@ public class Personne {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public double getNote() {
 		return note;
 	}
@@ -75,5 +108,6 @@ public class Personne {
 	public void setAuthentifie(boolean authentifie) {
 		this.authentifie = authentifie;
 	}
-
+	
+	
 }
