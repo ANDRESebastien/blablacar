@@ -1,13 +1,18 @@
 package fr.blablacar.bean;
 
-import java.sql.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Vehicule {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idVehicule;
 	private String marque;
 	private String model;
-	private Date annee;
-	private Personne proprietaire;
 
 	public long getIdVehicule() {
 		return idVehicule;
@@ -32,21 +37,4 @@ public class Vehicule {
 	public void setModel(String model) {
 		this.model = model;
 	}
-
-	public Date getAnnee() {
-		return annee;
-	}
-
-	public void setAnnee(Date annee) {
-		this.annee = annee;
-	}
-
-	public Personne getProprietaire() {
-		return proprietaire;
-	}
-
-	public void setProprietaire(Personne proprietaire) {
-		this.proprietaire = proprietaire;
-	}
-
 }

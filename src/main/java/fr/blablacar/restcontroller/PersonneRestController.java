@@ -15,13 +15,13 @@ import fr.blablacar.bean.Personne;
 import fr.blablacar.service.PersonneService;
 
 @RestController
-@RequestMapping("/personne")
+@RequestMapping("/personne/")
 public class PersonneRestController {
 
 	@Autowired
 	private PersonneService personneService;
 
-	@GetMapping("/{id}")
+	@GetMapping("{id}")
 	public Personne rechercher(@PathVariable("id") Long id) {
 		return this.personneService.rechercher(id);
 	}
@@ -31,16 +31,22 @@ public class PersonneRestController {
 		return this.personneService.lister();
 	}
 
-	@PostMapping("/{email}/{motDePasse}/{nom}/{prenom}")
-	public void ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
+	@PostMapping("{email}/{motDePasse}/{nom}/{prenom}")
+	public Personne ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
 			@PathVariable("nom") String nom, @PathVariable("prenom") String prenom,
 			@PathVariable("dateDeNaissance") Date dateDeNaissance) {
-		this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
+		return this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
 	}
-	
+
 	@PostMapping
-	public void ajouter(@RequestBody Personne personne) {
-		this.personneService.ajouter(personne);
+	public Personne ajouter(@RequestBody Personne personne) {
+		return this.personneService.ajouter(personne);
+	}
+
+	@PostMapping("{idPersonne}/{idTrajet}")
+	public Personne ajouterTrajet(@PathVariable("idPersonne") long idPersonne,
+			@PathVariable("idTrajet") long idTrajet) {
+		return this.personneService.ajouterTrajet(idPersonne, idTrajet);
 	}
 
 	@DeleteMapping("{id}")

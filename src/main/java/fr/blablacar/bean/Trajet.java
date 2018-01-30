@@ -1,19 +1,34 @@
 package fr.blablacar.bean;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Trajet {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idTrajet;
-	private Personne conducteur;
-	private Date jourDepart;
-	private Time heureDepart;
-	private List<Ville> listeVille;
-	private List<Time> heureArrive;
+	
+	@NotBlank
 	private int nombrePlace;
-	private List<Reservation> listeReservation;
-	private List<String> listeOption;
+	
+	@NotBlank
+	private String villeDepart;
+	
+	@NotBlank
+	private String villeArrive;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Personne conducteur;
 
 	public long getIdTrajet() {
 		return idTrajet;
@@ -21,46 +36,6 @@ public class Trajet {
 
 	public void setIdTrajet(long idTrajet) {
 		this.idTrajet = idTrajet;
-	}
-
-	public Personne getConducteur() {
-		return conducteur;
-	}
-
-	public void setConducteur(Personne conducteur) {
-		this.conducteur = conducteur;
-	}
-
-	public Date getJourDepart() {
-		return jourDepart;
-	}
-
-	public void setJourDepart(Date jourDepart) {
-		this.jourDepart = jourDepart;
-	}
-
-	public Time getHeureDepart() {
-		return heureDepart;
-	}
-
-	public void setHeureDepart(Time heureDepart) {
-		this.heureDepart = heureDepart;
-	}
-
-	public List<Ville> getListeVille() {
-		return listeVille;
-	}
-
-	public void setListeVille(List<Ville> listeVille) {
-		this.listeVille = listeVille;
-	}
-
-	public List<Time> getHeureArrive() {
-		return heureArrive;
-	}
-
-	public void setHeureArrive(List<Time> heureArrive) {
-		this.heureArrive = heureArrive;
 	}
 
 	public int getNombrePlace() {
@@ -71,20 +46,20 @@ public class Trajet {
 		this.nombrePlace = nombrePlace;
 	}
 
-	public List<Reservation> getListeReservation() {
-		return listeReservation;
+	public String getVilleDepart() {
+		return villeDepart;
 	}
 
-	public void setListeReservation(List<Reservation> listeReservation) {
-		this.listeReservation = listeReservation;
+	public void setVilleDepart(String villeDepart) {
+		this.villeDepart = villeDepart;
 	}
 
-	public List<String> getListeOption() {
-		return listeOption;
+	public String getVilleArrive() {
+		return villeArrive;
 	}
 
-	public void setListeOption(List<String> listeOption) {
-		this.listeOption = listeOption;
+	public void setVilleArrive(String villeArrive) {
+		this.villeArrive = villeArrive;
 	}
 
 }

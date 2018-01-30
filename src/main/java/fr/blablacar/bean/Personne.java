@@ -1,11 +1,13 @@
 package fr.blablacar.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -32,13 +34,15 @@ public class Personne {
 
 	@NotBlank
 	private String prenom;
-
-	@NotBlank
+	
 	@Temporal(TemporalType.DATE)
-	private Date dateDeNaissance;
+	private Date DateDeNaissance;
 
 	private double note;
 	private boolean authentifie;
+
+	@OneToMany(mappedBy = "conducteur")
+	private List<Trajet> listeTrajet;
 
 	public Personne() {
 		this.note = -1;
@@ -85,14 +89,6 @@ public class Personne {
 		this.prenom = prenom;
 	}
 
-	public Date getDateDeNaissance() {
-		return dateDeNaissance;
-	}
-
-	public void setDateDeNaissance(Date dateDeNaissance) {
-		this.dateDeNaissance = dateDeNaissance;
-	}
-
 	public double getNote() {
 		return note;
 	}
@@ -108,6 +104,20 @@ public class Personne {
 	public void setAuthentifie(boolean authentifie) {
 		this.authentifie = authentifie;
 	}
-	
-	
+
+	public List<Trajet> getListeTrajet() {
+		return listeTrajet;
+	}
+
+	public void setListeTrajet(List<Trajet> listeTrajet) {
+		this.listeTrajet = listeTrajet;
+	}
+
+	public Date getDateDeNaissance() {
+		return DateDeNaissance;
+	}
+
+	public void setDateDeNaissance(Date dateDeNaissance) {
+		DateDeNaissance = dateDeNaissance;
+	}
 }

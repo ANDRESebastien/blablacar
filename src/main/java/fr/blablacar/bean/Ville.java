@@ -1,6 +1,15 @@
 package fr.blablacar.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Ville {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idVille;
 	private String nom;
 	private String codePostal;

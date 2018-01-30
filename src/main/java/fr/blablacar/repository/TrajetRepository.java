@@ -1,9 +1,10 @@
 package fr.blablacar.repository;
 
-import fr.blablacar.bean.Personne;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import fr.blablacar.bean.Trajet;
+
 @Repository
-public interface PersonneRepository extends CrudRepository<Personne, Long> {
+public interface TrajetRepository extends CrudRepository<Trajet, Long> {
 }
