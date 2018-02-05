@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.blablacar.bean.Personne;
+import fr.blablacar.bean.Reservation;
 import fr.blablacar.bean.Trajet;
 import fr.blablacar.repository.PersonneRepository;
+import fr.blablacar.repository.ReservationRepository;
 import fr.blablacar.repository.TrajetRepository;
 
 @Service
@@ -16,12 +18,15 @@ public class PersonneService {
 
 	@Autowired
 	PersonneRepository personneRepository;
-	
+
 	@Autowired
 	TrajetRepository trajetRepository;
 
-	public Personne rechercher(long id) {
-		Personne personne = this.personneRepository.findOne(id);
+	@Autowired
+	ReservationRepository reservationRepository;
+
+	public Personne rechercher(long idPersonne) {
+		Personne personne = this.personneRepository.findOne(idPersonne);
 		return personne;
 	}
 
@@ -44,15 +49,44 @@ public class PersonneService {
 		return this.personneRepository.save(personne);
 	}
 
-	public void supprimer(long id) {
-		this.personneRepository.delete(id);
+	public void supprimer(long idPersonne) {
+		this.personneRepository.delete(idPersonne);
 	}
 
 	@Transactional
 	public Personne ajouterTrajet(long idPersonne, long idTrajet) {
 		Personne personne = this.rechercher(idPersonne);
 		Trajet trajet = this.trajetRepository.findOne(idTrajet);
-		personne.getListeTrajet().add(trajet);
-		return this.personneRepository.save(personne);
+
+		if (personne != null && trajet != null) {
+			trajet.setConducteur(personne);
+			this.trajetRepository.save(trajet);
+			return personne;
+		} else {
+			return null;
+		}
+	}
+
+	@Transactional
+	public Personne ajouterReservation(long idPersonne, long idReservation) {
+		System.out.println("PersonneService:ajouterReservation( idPersonne=" + idPersonne + ", idReservation="
+				+ idReservation + ")");
+		Personne personne = this.personneRepository.findOne(idPersonne);
+		Reservation reservation = this.reservationRepository.findOne(idReservation);
+		if (personne != null && reservation != null) {
+			System.out
+					.println("reservation.getPassager().getIdPersonne()=" + reservation.getPassager().getIdPersonne());
+
+			if (reservation.getTrajet().getConducteur().getIdPersonne() != idPersonne) {
+				System.out.println("PersonneService:ajouterReservation(): personne différent");
+
+				reservation.setPassager(personne);
+				this.reservationRepository.save(reservation);
+				return personne;
+			}
+		} else {
+			personne = null;
+		}
+		return personne;
 	}
 }

@@ -34,7 +34,7 @@ public class Personne {
 
 	@NotBlank
 	private String prenom;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date DateDeNaissance;
 
@@ -44,9 +44,16 @@ public class Personne {
 	@OneToMany(mappedBy = "conducteur")
 	private List<Trajet> listeTrajet;
 
+	@OneToMany(mappedBy = "passager")
+	private List<Reservation> listeReservation;
+
 	public Personne() {
 		this.note = -1;
 		this.authentifie = false;
+	}
+
+	public String toString() {
+		return "idPersonne=" + idPersonne + ";nom=" + nom + ";email=" + email + ";prenom=" + prenom;
 	}
 
 	public long getIdPersonne() {
@@ -119,5 +126,13 @@ public class Personne {
 
 	public void setDateDeNaissance(Date dateDeNaissance) {
 		DateDeNaissance = dateDeNaissance;
+	}
+
+	public List<Reservation> getListeReservation() {
+		return listeReservation;
+	}
+
+	public void setListeReservation(List<Reservation> listeReservation) {
+		this.listeReservation = listeReservation;
 	}
 }

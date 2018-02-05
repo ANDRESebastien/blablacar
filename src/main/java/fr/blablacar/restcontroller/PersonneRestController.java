@@ -15,15 +15,15 @@ import fr.blablacar.bean.Personne;
 import fr.blablacar.service.PersonneService;
 
 @RestController
-@RequestMapping("/personne/")
+@RequestMapping("/personne")
 public class PersonneRestController {
 
 	@Autowired
 	private PersonneService personneService;
 
-	@GetMapping("{id}")
-	public Personne rechercher(@PathVariable("id") Long id) {
-		return this.personneService.rechercher(id);
+	@GetMapping("{idPersonne}")
+	public Personne rechercher(@PathVariable("idPersonne") Long idPersonne) {
+		return this.personneService.rechercher(idPersonne);
 	}
 
 	@GetMapping
@@ -35,22 +35,32 @@ public class PersonneRestController {
 	public Personne ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
 			@PathVariable("nom") String nom, @PathVariable("prenom") String prenom,
 			@PathVariable("dateDeNaissance") Date dateDeNaissance) {
+		System.out.println("PersonneRestController:ajouter(email=" + email + ", motDePasse=" + motDePasse + ", nom=" + nom+ ", prenom=" + prenom+ ", dateDeNaissance=" + dateDeNaissance + ")");
 		return this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
 	}
 
 	@PostMapping
 	public Personne ajouter(@RequestBody Personne personne) {
+		System.out.println("PersonneRestController:ajouter(personne.getNom()=" + personne.getNom() + " personne.getEmail()=" + personne.getEmail() + ")");
 		return this.personneService.ajouter(personne);
 	}
 
-	@PostMapping("{idPersonne}/{idTrajet}")
+	@PostMapping("trajet/{idPersonne}/{idTrajet}")
 	public Personne ajouterTrajet(@PathVariable("idPersonne") long idPersonne,
 			@PathVariable("idTrajet") long idTrajet) {
+		System.out.println("PersonneRestController:ajouterTrajet(idPersonne=" + idPersonne + ", idTrajet=" + idTrajet + ")");
 		return this.personneService.ajouterTrajet(idPersonne, idTrajet);
 	}
+	
+	@PostMapping("reservation/{idPersonne}/{idReservation}")
+	public Personne ajouterReservation(@PathVariable("idPersonne") long idPersonne,
+			@PathVariable("idReservation") long idReservation) {
+		System.out.println("PersonneRestController:ajouterTrajet(idPersonne=" + idPersonne + ", idTrajet=" + idReservation + ")");
+		return this.personneService.ajouterReservation(idPersonne, idReservation);
+	}
 
-	@DeleteMapping("{id}")
-	public void supprimer(@PathVariable("id") Long id) {
-		this.personneService.supprimer(id);
+	@DeleteMapping("{idPersonne}")
+	public void supprimer(@PathVariable("idPersonne") Long idPersonne) {
+		this.personneService.supprimer(idPersonne);
 	}
 }

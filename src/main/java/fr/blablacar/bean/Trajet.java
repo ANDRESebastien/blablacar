@@ -1,10 +1,15 @@
 package fr.blablacar.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -16,19 +21,46 @@ public class Trajet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idTrajet;
-	
-	@NotBlank
-	private int nombrePlace;
-	
-	@NotBlank
-	private String villeDepart;
-	
-	@NotBlank
-	private String villeArrive;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	private Personne conducteur;
+
+	@NotNull
+	private int nombrePlace;
+
+	@NotBlank
+	private String villeDepart;
+
+	@NotBlank
+	private String villeArrive;
+
+	@OneToMany(mappedBy = "trajet")
+	private List<Reservation> listeReservation;
+
+	public List<Reservation> getListeReservation() {
+		if (this.listeReservation == null) {
+			this.listeReservation = new ArrayList<>();
+		}
+		return listeReservation;
+	}
+
+	public void setListeReservation(List<Reservation> listeReservation) {
+		this.listeReservation = listeReservation;
+	}
+
+	public String toString() {
+		return "idTrajet=" + idTrajet + ";nombrePlace=" + nombrePlace + ";villeDepart=" + villeDepart + ";villeArrive="
+				+ villeArrive;
+	}
+
+	public Personne getConducteur() {
+		return conducteur;
+	}
+
+	public void setConducteur(Personne conducteur) {
+		this.conducteur = conducteur;
+	}
 
 	public long getIdTrajet() {
 		return idTrajet;

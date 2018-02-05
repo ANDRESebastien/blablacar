@@ -13,15 +13,15 @@ import fr.blablacar.bean.Trajet;
 import fr.blablacar.service.TrajetService;
 
 @RestController
-@RequestMapping("/trajet/")
+@RequestMapping("/trajet")
 public class TrajetRestController {
 
 	@Autowired
 	private TrajetService trajetService;
 
-	@GetMapping("{id}")
-	public Trajet rechercher(@PathVariable("id") Long id) {
-		return this.trajetService.rechercher(id);
+	@GetMapping("{idTrajet}")
+	public Trajet rechercher(@PathVariable("idTrajet") Long idTrajet) {
+		return this.trajetService.rechercher(idTrajet);
 	}
 
 	@GetMapping
@@ -32,18 +32,21 @@ public class TrajetRestController {
 	@PostMapping("{nombrePlace}/{villeDepart}/{villeArrive}")
 	public Trajet ajouter(@PathVariable("nombrePlace") int nombrePlace, @PathVariable("villeDepart") String villeDepart,
 			@PathVariable("villeArrive") String villeArrive) {
-		System.out.println("ajouter EL");
-		return this.trajetService.ajouter(nombrePlace,villeDepart,villeArrive);
+		System.out.println("TrajetRestController:ajouter( nombrePlace=" + nombrePlace + ", villeDepart=" + villeDepart
+				+ ", villeArrive=" + villeArrive);
+		return this.trajetService.ajouter(nombrePlace, villeDepart, villeArrive);
 	}
-	
+
 	@PostMapping
 	public Trajet ajouter(@RequestBody Trajet trajet) {
-		System.out.println("ajouter body");
+		System.out.println("TrajetRestController:ajouter( trajet.getNombrePlace()=" + trajet.getNombrePlace()
+				+ ", trajet.getVilleDepart()=" + trajet.getVilleDepart() + ", trajet.getVilleArrive()="
+				+ trajet.getVilleArrive() + ")");
 		return this.trajetService.ajouter(trajet);
 	}
 
-	@DeleteMapping("{id}")
-	public void supprimer(@PathVariable("id") Long id) {
-		this.trajetService.supprimer(id);
+	@DeleteMapping("{idTrajet}")
+	public void supprimer(@PathVariable("idTrajet") Long idTrajet) {
+		this.trajetService.supprimer(idTrajet);
 	}
 }
