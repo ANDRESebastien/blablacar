@@ -2,13 +2,10 @@ package fr.blablacar.html.form;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-public class TrajetForm {
+public class AcceuilForm {
 	private Long idPersonne;
 	private Integer nombrePlace;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateDepart;
 	private Short heureDepart;
 	private Short minuteDepart;

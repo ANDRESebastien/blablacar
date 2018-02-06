@@ -12,6 +12,8 @@ import fr.blablacar.bean.Personne;
 import fr.blablacar.html.form.TrajetForm;
 import fr.blablacar.service.PersonneService;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 @Controller
@@ -36,7 +38,7 @@ public class TrajetController {
 			// Erreur bas niveau, retour sur la page
 			return "trajet";
 		}
-
+		
 		// Controle métier
 		Personne personne = personneService.ajouterTrajet(trajetForm.getIdPersonne(), trajetForm.getNombrePlace(),
 				trajetForm.getVilleDepart(), trajetForm.getVilleArrive());

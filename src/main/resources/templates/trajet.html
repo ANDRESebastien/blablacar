@@ -7,6 +7,8 @@
 <body>
 	<form action="#" th:action="@{/trajet}" th:object="${trajetForm}"
 		method="post">
+		<input type="hidden" id="idPersonne" name="idPersonne"
+			th:field="*{idPersonne}" />
 		<table>
 			<tr>
 				<td>Ville de d&eacute;part :</td>
