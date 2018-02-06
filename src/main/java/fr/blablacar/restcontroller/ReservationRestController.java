@@ -1,10 +1,8 @@
 package fr.blablacar.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +10,7 @@ import fr.blablacar.bean.Reservation;
 import fr.blablacar.service.ReservationService;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/api/reservation")
 public class ReservationRestController {
 
 	@Autowired
@@ -28,14 +26,17 @@ public class ReservationRestController {
 		return this.reservationService.lister();
 	}
 
+	/*
 	@PostMapping("{idPassager}/{nombrePlaceReserve}")
 	public Reservation ajouter(@PathVariable("idPassager") long idPassager,
 			@PathVariable("nombrePlaceReserve") int nombrePlaceReserve) {
 		return this.reservationService.ajouter(idPassager, nombrePlaceReserve);
 	}
+	
 
 	@DeleteMapping("{idReservation}")
 	public void supprimer(@PathVariable("idReservation") Long idReservation) {
 		this.reservationService.supprimer(idReservation);
 	}
+	*/
 }

@@ -15,7 +15,7 @@ import fr.blablacar.bean.Personne;
 import fr.blablacar.service.PersonneService;
 
 @RestController
-@RequestMapping("/personne")
+@RequestMapping("/api/personne")
 public class PersonneRestController {
 
 	@Autowired
@@ -35,28 +35,30 @@ public class PersonneRestController {
 	public Personne ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
 			@PathVariable("nom") String nom, @PathVariable("prenom") String prenom,
 			@PathVariable("dateDeNaissance") Date dateDeNaissance) {
-		System.out.println("PersonneRestController:ajouter(email=" + email + ", motDePasse=" + motDePasse + ", nom=" + nom+ ", prenom=" + prenom+ ", dateDeNaissance=" + dateDeNaissance + ")");
+		System.out.println("PersonneRestController:ajouter(email=" + email + ", motDePasse=" + motDePasse + ", nom="
+				+ nom + ", prenom=" + prenom + ", dateDeNaissance=" + dateDeNaissance + ")");
 		return this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
 	}
 
 	@PostMapping
 	public Personne ajouter(@RequestBody Personne personne) {
-		System.out.println("PersonneRestController:ajouter(personne.getNom()=" + personne.getNom() + " personne.getEmail()=" + personne.getEmail() + ")");
+		System.out.println("PersonneRestController:ajouter(personne.getNom()=" + personne.getNom()
+				+ " personne.getEmail()=" + personne.getEmail() + " personne.getDateDeNaissance()=" + personne.getDateDeNaissance() + ")");
 		return this.personneService.ajouter(personne);
 	}
 
-	@PostMapping("trajet/{idPersonne}/{idTrajet}")
+	@PostMapping("/trajet/{idPersonne}/{nombrePlace}/{villeDepart}/{villeArrive}")
 	public Personne ajouterTrajet(@PathVariable("idPersonne") long idPersonne,
-			@PathVariable("idTrajet") long idTrajet) {
-		System.out.println("PersonneRestController:ajouterTrajet(idPersonne=" + idPersonne + ", idTrajet=" + idTrajet + ")");
-		return this.personneService.ajouterTrajet(idPersonne, idTrajet);
+			@PathVariable("nombrePlace") int nombrePlace, @PathVariable("villeDepart") String villeDepart,
+			@PathVariable("villeArrive") String villeArrive) {
+		System.out.println("PersonneRestController:ajouterTrajet()");
+		return this.personneService.ajouterTrajet(idPersonne, nombrePlace, villeDepart, villeArrive);
 	}
-	
-	@PostMapping("reservation/{idPersonne}/{idReservation}")
+
+	@PostMapping("/reservation/{idPersonne}/{idTrajet}/{nombrePlaceReserve}")
 	public Personne ajouterReservation(@PathVariable("idPersonne") long idPersonne,
-			@PathVariable("idReservation") long idReservation) {
-		System.out.println("PersonneRestController:ajouterTrajet(idPersonne=" + idPersonne + ", idTrajet=" + idReservation + ")");
-		return this.personneService.ajouterReservation(idPersonne, idReservation);
+			@PathVariable("idTrajet") long idTrajet, @PathVariable("nombrePlaceReserve") int nombrePlaceReserve) {
+		return this.personneService.ajouterReservation(idPersonne, idTrajet, nombrePlaceReserve);
 	}
 
 	@DeleteMapping("{idPersonne}")

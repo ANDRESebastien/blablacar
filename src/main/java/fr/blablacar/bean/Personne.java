@@ -13,6 +13,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 //import lombok.Data;
 //@Data
 
@@ -32,11 +34,11 @@ public class Personne {
 	@NotBlank
 	private String nom;
 
-	@NotBlank
 	private String prenom;
 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
-	private Date DateDeNaissance;
+	private Date dateDeNaissance;
 
 	private double note;
 	private boolean authentifie;
@@ -57,7 +59,7 @@ public class Personne {
 	}
 
 	public long getIdPersonne() {
-		return idPersonne;
+		return this.idPersonne;
 	}
 
 	public void setIdPersonne(long idPersonne) {
@@ -65,7 +67,7 @@ public class Personne {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -73,7 +75,7 @@ public class Personne {
 	}
 
 	public String getMotDePasse() {
-		return motDePasse;
+		return this.motDePasse;
 	}
 
 	public void setMotDePasse(String motDePasse) {
@@ -81,7 +83,7 @@ public class Personne {
 	}
 
 	public String getNom() {
-		return nom;
+		return this.nom;
 	}
 
 	public void setNom(String nom) {
@@ -89,7 +91,7 @@ public class Personne {
 	}
 
 	public String getPrenom() {
-		return prenom;
+		return this.prenom;
 	}
 
 	public void setPrenom(String prenom) {
@@ -97,7 +99,7 @@ public class Personne {
 	}
 
 	public double getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(double note) {
@@ -105,7 +107,7 @@ public class Personne {
 	}
 
 	public boolean isAuthentifie() {
-		return authentifie;
+		return this.authentifie;
 	}
 
 	public void setAuthentifie(boolean authentifie) {
@@ -113,7 +115,7 @@ public class Personne {
 	}
 
 	public List<Trajet> getListeTrajet() {
-		return listeTrajet;
+		return this.listeTrajet;
 	}
 
 	public void setListeTrajet(List<Trajet> listeTrajet) {
@@ -121,15 +123,15 @@ public class Personne {
 	}
 
 	public Date getDateDeNaissance() {
-		return DateDeNaissance;
+		return this.dateDeNaissance;
 	}
 
 	public void setDateDeNaissance(Date dateDeNaissance) {
-		DateDeNaissance = dateDeNaissance;
+		this.dateDeNaissance = dateDeNaissance;
 	}
 
 	public List<Reservation> getListeReservation() {
-		return listeReservation;
+		return this.listeReservation;
 	}
 
 	public void setListeReservation(List<Reservation> listeReservation) {

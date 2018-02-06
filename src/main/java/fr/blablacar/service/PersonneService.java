@@ -35,8 +35,12 @@ public class PersonneService {
 		return listePersonne;
 	}
 
-	public Personne ajouter(Personne personne) {
-		return this.personneRepository.save(personne);
+	public Personne ajouter(String nom ,String login, String password) {
+		Personne personne = new Personne();
+		personne.setNom(nom);
+		personne.setEmail(login);
+		personne.setMotDePasse(password);
+		return this.ajouter(personne);
 	}
 
 	public Personne ajouter(String email, String motDePasse, String nom, String prenom, Date dateDeNaissance) {
@@ -46,7 +50,14 @@ public class PersonneService {
 		personne.setNom(nom);
 		personne.setPrenom(prenom);
 		personne.setDateDeNaissance(dateDeNaissance);
-		return this.personneRepository.save(personne);
+		return this.ajouter(personne);
+	}
+
+	public Personne ajouter(Personne personne) {
+		if (this.personneRepository.findByEmail(personne.getEmail()) == null) {
+			return this.personneRepository.save(personne);
+		}
+		return null;
 	}
 
 	public void supprimer(long idPersonne) {
@@ -54,12 +65,14 @@ public class PersonneService {
 	}
 
 	@Transactional
-	public Personne ajouterTrajet(long idPersonne, long idTrajet) {
+	public Personne ajouterTrajet(long idPersonne, int nombrePlace, String villeDepart, String villeArrive) {
 		Personne personne = this.rechercher(idPersonne);
-		Trajet trajet = this.trajetRepository.findOne(idTrajet);
-
-		if (personne != null && trajet != null) {
+		if (personne != null) {
+			Trajet trajet = new Trajet();
 			trajet.setConducteur(personne);
+			trajet.setNombrePlace(nombrePlace);
+			trajet.setVilleDepart(villeDepart);
+			trajet.setVilleArrive(villeArrive);
 			this.trajetRepository.save(trajet);
 			return personne;
 		} else {
@@ -68,19 +81,17 @@ public class PersonneService {
 	}
 
 	@Transactional
-	public Personne ajouterReservation(long idPersonne, long idReservation) {
-		System.out.println("PersonneService:ajouterReservation( idPersonne=" + idPersonne + ", idReservation="
-				+ idReservation + ")");
+	public Personne ajouterReservation(long idPersonne, long idTrajet, int nombrePlaceReserve) {
 		Personne personne = this.personneRepository.findOne(idPersonne);
-		Reservation reservation = this.reservationRepository.findOne(idReservation);
-		if (personne != null && reservation != null) {
-			System.out
-					.println("reservation.getPassager().getIdPersonne()=" + reservation.getPassager().getIdPersonne());
+		Trajet trajet = this.trajetRepository.findOne(idTrajet);
 
-			if (reservation.getTrajet().getConducteur().getIdPersonne() != idPersonne) {
-				System.out.println("PersonneService:ajouterReservation(): personne différent");
+		if (personne != null && trajet != null) {
 
+			if (trajet.getConducteur().getIdPersonne() != idPersonne) {
+				Reservation reservation = new Reservation();
 				reservation.setPassager(personne);
+				reservation.setNombrePlaceReserve(nombrePlaceReserve);
+				reservation.setTrajet(trajet);
 				this.reservationRepository.save(reservation);
 				return personne;
 			}
@@ -89,4 +100,5 @@ public class PersonneService {
 		}
 		return personne;
 	}
+
 }

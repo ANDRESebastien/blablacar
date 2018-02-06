@@ -22,18 +22,6 @@ public class TrajetService {
 		return listeTrajet;
 	}
 
-	public Trajet ajouter(Trajet trajet) {
-		return this.trajetRepository.save(trajet);
-	}
-
-	public Trajet ajouter(int nombrePlace, String villeDepart, String villeArrive) {
-		Trajet trajet = new Trajet();
-		trajet.setNombrePlace(nombrePlace);
-		trajet.setVilleDepart(villeDepart);
-		trajet.setVilleArrive(villeArrive);
-		return this.trajetRepository.save(trajet);
-	}
-
 	public void supprimer(long id) {
 		this.trajetRepository.delete(id);
 	}

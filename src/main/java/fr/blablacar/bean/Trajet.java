@@ -93,5 +93,4 @@ public class Trajet {
 	public void setVilleArrive(String villeArrive) {
 		this.villeArrive = villeArrive;
 	}
-
 }
