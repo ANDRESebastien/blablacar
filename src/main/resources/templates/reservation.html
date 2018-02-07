@@ -1,6 +1,66 @@
+<!DOCTYPE html>
 <html>
-	<body>
+<head>
+<div th:include="include :: ajoutCSS" />
+<title>R&eacute;servation</title>
+</head>
+<body>
+	<div th:replace="menu :: affichageMenu" />
+	<section class="section">
+		<div class="container">
+			
+<form action="#" th:action="@{/reservation}" th:object="${reservationForm}"
+				method="post">
+				<input type="hidden" th:field="*{idPersonne}" /> 
+				<input type="hidden" th:field="*{idTrajet}" />
+				<table>
+					<tr>
+						<td>Ville de d&eacute;part :</td>
+						<td><span type="text" th:field="*{villeDepart}" /></td>
+					</tr>
+					<tr>
+						<td>Ville d'arriv&eacute;e :</td>
+						<td><input type="text" th:field="*{villeArrive}"
+							th:classappend="${#fields.hasErrors('villeArrive')} ? error : good " /></td>
+						<td th:if="${#fields.hasErrors('villeArrive')}"
+							th:errors="*{villeArrive}" />
+					</tr>
+					<tr>
+						<td>Jour du d&eacute;part :</td>
+						<td><input type="date" th:field="*{dateDepart}"
+							th:classappend="${#fields.hasErrors('dateDepart')} ? error : good " /></td>
+						<td th:if="${#fields.hasErrors('dateDepart')}"
+							th:errors="*{dateDepart}" />
+					</tr>
+					<tr>
+						<td>Horaire du d&eacute;part :</td>
+						<td><input type="number" th:field="*{heureDepart}"
+							th:classappend="${#fields.hasErrors('heureDepart')} ? error : good " />
+							: <input type="number" th:field="*{minuteDepart}"
+							th:classappend="${#fields.hasErrors('minuteDepart')} ? error : good " /></td>
+						<td
+							th:if="${#fields.hasErrors('heureDepart') || #fields.hasErrors('minuteDepart')}"
+							th:errors="*{heureDepart}" />
+					</tr>
+					<tr>
+						<td>Nombre de places :</td>
+						<td><input type="number" th:field="*{nombrePlace}"
+							th:classappend="${#fields.hasErrors('nombrePlace')} ? error : good " /></td>
+						<td th:if="${#fields.hasErrors('nombrePlace')}"
+							th:errors="*{nombrePlace}" />
+					</tr>
 
-	<div th:text=""></div>
-	</body>
+					<tr>
+						<td>
+							<button type="submit">R&eacute;server le trajet</button>
+						</td>
+					</tr>
+				</table>
+
+				<h2 th:text="${message}"></h2>
+			</form>
+			
+		</div>
+	</section>
+</body>
 </html>

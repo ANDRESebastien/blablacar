@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+<html>
 <head>
-<meta charset="ISO-8859-1" />
+<div th:include="include :: ajoutCSS" />
 <title>Acceuil</title>
 </head>
 <body>
-	<form action="#" th:action="@{/acceuil}" th:object="${acceuilForm}"
-		method="post">
-		<input type="hidden" id="idPersonne" name="idPersonne"
-			th:field="*{idPersonne}" />
-		<p>
-			<a th:href="@{/trajet}">Ajouter un trajet</a>
-		</p>
-		<p>
-			<a th:href="@{/reservation}">R&eacute;server un trajet</a>
-		</p>
-	</form>
+	<div th:replace="menu :: affichageMenu" />
+	<section class="section">
+		<div class="container">
+			<form action="#" th:action="@{/acceuil}" th:object="${acceuilForm}"
+				method="post">
+				<input type="hidden" id="idPersonne" name="idPersonne"
+					th:field="*{idPersonne}" />
+				<p>
+
+					<a th:href="@{/trajet(idPersonne=*{idPersonne})}">Ajouter un
+						trajet</a>
+				</p>
+				<p>
+					<a th:href="@{/reservation}">R&eacute;server un trajet</a>
+				</p>
+			</form>
+		</div>
+	</section>
 </body>
 </html>

@@ -10,16 +10,10 @@
 	<div th:replace="menu :: affichageMenu" />
 	<section class="section">
 		<div class="container">
-			<form action="#" th:action="@{/}" th:object="${inscriptionForm}"
+			<form action="#" th:action="@{/acceuil}" th:object="${connexionForm}"
 				method="post">
-				
+
 				<table>
-					<tr>
-						<td>Nom :</td>
-						<td><input type="text" th:field="*{nom}"
-							th:classappend="${#fields.hasErrors('nom')} ? error : good " /></td>
-						<td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" />
-					</tr>
 					<tr>
 						<td>Login/Email :</td>
 						<td><input type="text" th:field="*{login}"
@@ -32,11 +26,10 @@
 							th:classappend="${#fields.hasErrors('password')} ? error : good " /></td>
 						<td th:if="${#fields.hasErrors('password')}"
 							th:errors="*{password}" />
-						<!--   <input type="date" th:field="*{dateDeNaissance}"/> -->
 					</tr>
 					<tr>
 						<td>
-							<button type="submit">S'inscrire</button>
+							<button type="submit">Se connecter</button>
 						</td>
 					</tr>
 				</table>

@@ -1,0 +1,22 @@
+
+<nav class="navbar is-info" role="navigation"
+	aria-label="main navigation" th:fragment="affichageMenu">
+	<!--  <div class="navbar-brand">
+			<a class="navbar-item" th:href="@{/}"> Inscription </a>
+		</div>
+		-->
+	<div class="navbar-menu" id="navMenu">
+		<div class="navbar-start">
+			<a class="navbar-item" th:href="@{/acceuil}"> Acceuil </a> <a
+				class="navbar-item" th:href="@{/trajet}"> Proposer un trajet </a> <a
+				class="navbar-item" th:href="@{/listetrajet}"> Consulter les trajets </a>
+		</div>
+
+		<div class="navbar-end">
+			<a class="navbar-item" th:href="@{/inscription}"> Inscription </a>
+		</div>
+		<a class="navbar-item" th:href="@{/connexion}" th:disabled="true"
+			th:visible="false"> Connexion </a>
+
+	</div>
+</nav>

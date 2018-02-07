@@ -9,27 +9,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.blablacar.bean.Personne;
-import fr.blablacar.html.form.PersonneCreationForm;
+import fr.blablacar.html.form.ConnexionForm;
+import fr.blablacar.html.form.InscriptionForm;
 import fr.blablacar.service.PersonneService;
 
 import javax.validation.Valid;
 
 @Controller
-public class PersonneCreationController {
+public class PersonneController {
 
 	@Autowired
 	private PersonneService personneService;
 
 	@GetMapping("/")
-	public String showForm(PersonneCreationForm personneCreationForm) {
-		System.out.println("PersonneCreationController:showForm()");
+	public String redirect(InscriptionForm inscriptionForm) {
 		return "inscription";
+	}
+	
+	@GetMapping("/inscription")
+	public String inscription(InscriptionForm inscriptionForm) {
+		return "inscription";
+	}
+	
+	@GetMapping("/connexion")
+	public String connexion(ConnexionForm connexionForm) {
+		return "connexion";
 	}
 
 	@PostMapping("/")
-	public String ajouter(@Valid PersonneCreationForm personneCreationForm, BindingResult bindingResult,
+	public String ajouterInscription(@Valid InscriptionForm inscriptionForm, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, Model model) {
-		System.out.println("PersonneCreationController:ajouter()");
+		System.out.println("PersonneCreationController:ajouterInscription()");
 
 		if (bindingResult.hasErrors()) {
 			System.out.println("-> erreur technique");
@@ -38,8 +48,8 @@ public class PersonneCreationController {
 		}
 
 		// Controle métier
-		Personne personne = personneService.ajouter(personneCreationForm.getNom(), personneCreationForm.getLogin(),
-				personneCreationForm.getPassword());
+		Personne personne = personneService.ajouter(inscriptionForm.getNom(), inscriptionForm.getLogin(),
+				inscriptionForm.getPassword());
 		
 		if (personne == null) {
 			System.out.println("-> email déjà présent en base");
@@ -49,7 +59,8 @@ public class PersonneCreationController {
 		}
 
 		// Si OK passage à la page suivante avec argument
-		redirectAttributes.addAttribute("idPersonne", personne.getIdPersonne());
+		String numPersonne = String.valueOf(personne.getIdPersonne());
+		redirectAttributes.addFlashAttribute("idPersonne", numPersonne);
 		return "redirect:/acceuil";
 	}
 }
