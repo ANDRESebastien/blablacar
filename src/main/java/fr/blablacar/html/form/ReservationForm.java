@@ -3,7 +3,6 @@ package fr.blablacar.html.form;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.w3c.dom.html.HTMLButtonElement;
 
 public class ReservationForm {
 	private Long idPersonne;

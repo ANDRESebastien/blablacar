@@ -20,13 +20,8 @@ public class PersonneController {
 
 	@Autowired
 	private PersonneService personneService;
-
-	@GetMapping("/")
-	public String redirect(InscriptionForm inscriptionForm) {
-		return "inscription";
-	}
 	
-	@GetMapping("/inscription")
+	@GetMapping({"/", "/inscription"})
 	public String inscription(InscriptionForm inscriptionForm) {
 		return "inscription";
 	}
@@ -42,7 +37,8 @@ public class PersonneController {
 		System.out.println("PersonneCreationController:ajouterInscription()");
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("-> erreur technique");
+			System.out.println("-> erreur technique : " + bindingResult.getAllErrors());
+			//log.error("errors = " + bindingResult.getAllErrors());
 			// Erreur bas niveau, retour sur la page
 			return "inscription";
 		}
