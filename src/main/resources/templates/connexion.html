@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <div th:include="include :: ajoutCSS" />
 <title>Inscription</title>
@@ -12,7 +14,6 @@
 		<div class="container">
 			<form action="#" th:action="@{/acceuil}" th:object="${connexionForm}"
 				method="post">
-
 				<table>
 					<tr>
 						<td>Login/Email :</td>

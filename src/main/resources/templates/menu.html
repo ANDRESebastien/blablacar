@@ -1,22 +1,28 @@
 
 <nav class="navbar is-info" role="navigation"
 	aria-label="main navigation" th:fragment="affichageMenu">
-	<!--  <div class="navbar-brand">
-			<a class="navbar-item" th:href="@{/}"> Inscription </a>
-		</div>
-		-->
+	<div class="navbar-brand">
+		<a class="navbar-item" th:href="@{/acceuil}">Acceuil</a>
+	</div>
+
 	<div class="navbar-menu" id="navMenu">
 		<div class="navbar-start">
-			<a class="navbar-item" th:href="@{/acceuil}">Acceuil</a> <a
-				class="navbar-item" th:href="@{/trajet}">Proposer un trajet</a> <a
-				class="navbar-item" th:href="@{/listetrajet}">Consulter les trajets</a>
+			<a class="navbar-item" th:href="@{/trajet}">Proposer un trajet</a> <a
+				class="navbar-item" th:href="@{/listetrajet}">Consulter les
+				trajets</a>
 		</div>
 
-		<div class="navbar-end">
-			<a class="navbar-item" th:href="@{/inscription}">Inscription</a>
-		</div>
-		<a class="navbar-item" th:href="@{/connexion}" th:disabled="true"
-			th:visible="false">Connexion</a>
 
+        <div th:if="${#httpServletRequest.remoteUser!= null}" class="navbar-end">
+			<span class="navbar-item" th:text="${#httpServletRequest.remoteUser}" />
+			<a class="navbar-item" th:href="@{/login?logout}" th:disabled="true"
+				th:visible="false">D&eacute;connexion</a>
+        </div>
+
+		<div th:if="${#httpServletRequest.remoteUser== null}" class="navbar-end">
+			<a class="navbar-item" th:href="@{/inscription}">Inscription</a> <a
+				class="navbar-item" th:href="@{/connexion}" th:disabled="true"
+				th:visible="false">Connexion</a>
+		</div>
 	</div>
 </nav>

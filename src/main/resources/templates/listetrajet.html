@@ -1,4 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <div th:include="include :: ajoutCSS" />
 <title>liste des trajets</title>
@@ -9,25 +12,27 @@
 	</div>
 	<section class="section">
 		<div class="container">
-				<table>
-					<tr>
-						<th>Trajet num&eacute;ro</th>
-						<th>D&eacute;part</th>
-						<th>Arriv&eacute;e</th>
-						<th>Nombre de places</th>
-					</tr>
-					<tr th:each="trajet : ${listeDeTrajet}">
-					<form action="#" th:action="@{/listetrajet}" th:object="${listeTrajetForm}" method="post">
-					<input type="hidden" th:field="*{idPersonne}" /> 
-					<input type="hidden" th:field="*{idTrajet}" /> 
+			<table>
+				<tr>
+					<th>Trajet num&eacute;ro</th>
+					<th>D&eacute;part</th>
+					<th>Arriv&eacute;e</th>
+					<th>Nombre de places</th>
+				</tr>
+				<tr th:each="trajet : ${listeDeTrajet}">
+					<form action="#" th:action="@{/listetrajet}"
+						th:object="${listeTrajetForm}" method="post">
+						<input type="hidden" th:field="${listeTrajetForm.idPersonne}" id="'idPersonne' + ${trajet.idTrajet}" />
+						<input type="hidden" th:value="${trajet.idTrajet}" id="'idTrajet' + ${trajet.idTrajet}"
+							name="'idTrajet' + ${trajet.idTrajet}" />
 						<td th:text="${trajet.idTrajet}" />
 						<td th:text="${trajet.villeDepart}" />
 						<td th:text="${trajet.villeArrive}" />
 						<td th:text="${trajet.nombrePlace}" />
 						<td><button type="submit">R&eacute;server</button></td>
-					</tr>
-				</table>
-			</form>
+					</form>
+				</tr>
+			</table>
 		</div>
 	</section>
 </body>

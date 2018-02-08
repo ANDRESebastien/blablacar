@@ -20,7 +20,7 @@ public class AcceuilController {
 		System.out.println("AcceuilController:showForm()");
 		
 		try {
-			if (Integer.parseInt(idPersonne) > 0) {
+			if (Long.parseLong(idPersonne) > 0) {
 				acceuilForm.setIdPersonne(idPersonne);
 				return "acceuil";
 			}
@@ -43,7 +43,8 @@ public class AcceuilController {
 		}
 
 		// Si OK passage à la page suivante avec argument
-		redirectAttributes.addFlashAttribute("idPersonne", acceuilForm.getIdPersonne());
+		model.addAttribute("idPersonne", acceuilForm.getIdPersonne());
+		//redirectAttributes.addFlashAttribute("idPersonne", acceuilForm.getIdPersonne());
 		return "redirect:/trajet";
 	}
 }

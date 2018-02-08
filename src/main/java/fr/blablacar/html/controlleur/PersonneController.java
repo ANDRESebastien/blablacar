@@ -22,12 +22,12 @@ public class PersonneController {
 	private PersonneService personneService;
 	
 	@GetMapping({"/", "/inscription"})
-	public String inscription(InscriptionForm inscriptionForm) {
+	public String inscription(InscriptionForm inscriptionForm, Model model) {
 		return "inscription";
 	}
 	
 	@GetMapping("/connexion")
-	public String connexion(ConnexionForm connexionForm) {
+	public String connexion(ConnexionForm connexionForm, Model model) {
 		return "connexion";
 	}
 

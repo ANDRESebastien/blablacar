@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.w3c.dom.html.HTMLButtonElement;
 
 import fr.blablacar.bean.Personne;
 import fr.blablacar.bean.Trajet;
@@ -16,6 +16,8 @@ import fr.blablacar.html.form.ReservationForm;
 import fr.blablacar.html.form.TrajetForm;
 import fr.blablacar.service.PersonneService;
 import fr.blablacar.service.TrajetService;
+
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -29,15 +31,43 @@ public class TrajetController {
 	private TrajetService trajetService;
 
 	@GetMapping("/trajet")
-	public String trajet(TrajetForm trajetForm) {
+	public String trajet(TrajetForm trajetForm, Model model) {
 		System.out.println("TrajetController:trajet()");
+		model.addAttribute("idPersonne", trajetForm.getIdPersonne());
 		return "trajet";
 	}
 
 	@GetMapping("/reservation")
-	public String reservation(TrajetForm trajetForm, Model model) {
-		System.out.println("TrajetController:reservation()");
-		return "reservation";
+	public String reservation(ReservationForm reservationForm, Model model,
+			@ModelAttribute("idPersonne") String idPersonne, @ModelAttribute("idTrajet") String idTrajet) {
+
+		System.out.println("TrajetController:reservation() idPersonne=" + idPersonne + " idTrajet=" + idTrajet);
+
+		try {
+			long identifiantPersonne = Long.parseLong(idPersonne);
+			long identifiantTrajet = Long.parseLong(idTrajet);
+
+			if (identifiantPersonne > 0 && identifiantTrajet > 0) {
+				reservationForm.setIdPersonne(identifiantPersonne);
+				reservationForm.setIdTrajet(identifiantTrajet);
+
+				Personne personne = personneService.rechercher(identifiantPersonne);
+				Trajet trajet = trajetService.rechercher(identifiantTrajet);
+
+				if (trajet.getConducteur().getIdPersonne() == personne.getIdPersonne()) {
+					reservationForm.setVilleDepart(trajet.getVilleDepart());
+					reservationForm.setVilleArrive(trajet.getVilleArrive());
+					reservationForm.setNombrePlace(trajet.getNombrePlace());
+					reservationForm.setNombrePlaceReserve(1);
+					return "reservation";
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Exception " + e.getMessage());
+			return "redirect:/";
+		}
+		//model.addAttribute("idPersonne", idPersonne);
+		return "redirect:/listetrajet";
 	}
 
 	@PostMapping("/reservation")
@@ -45,6 +75,16 @@ public class TrajetController {
 			RedirectAttributes redirectAttributes, Model model) {
 		System.out.println("TrajetController:ajouterReservation() IdPersonne=" + reservationForm.getIdPersonne()
 				+ " IdTrajet=" + reservationForm.getIdTrajet());
+		
+		
+		Personne personne = personneService.rechercher(reservationForm.getIdPersonne());
+		Trajet trajet = trajetService.rechercher(reservationForm.getIdTrajet());
+		personne = personneService.ajouterReservation(personne.getIdPersonne(), trajet.getIdTrajet(), reservationForm.getNombrePlaceReserve());
+		
+		
+		
+		model.addAttribute("reservationForm", reservationForm);
+		model.addAttribute("message", personne.getPrenom() +" merci d'avoir réservé le trajet pour " + trajet.getVilleArrive());
 		return "reservation";
 	}
 
@@ -70,30 +110,34 @@ public class TrajetController {
 
 		// Si OK passage à la page suivante avec argument
 		model.addAttribute("message", "Trajet ajouté");
+		model.addAttribute("idPersonne", trajetForm.getIdPersonne());
 		return "trajet";
 	}
 
 	@GetMapping("/listetrajet")
-	public String lister(ListeTrajetForm listeTrajetForm, Model model) {
-		System.out.println("TrajetController:lister()");
+	public String listetrajet(ListeTrajetForm listeTrajetForm, Model model) {
+		System.out.println("TrajetController:listetrajet()");
 		Iterable<Trajet> listeDeTrajet = trajetService.lister();
-		
-		
-		
+
+		model.addAttribute("idPersonne", listeTrajetForm.getIdPersonne());
 		model.addAttribute("listeDeTrajet", listeDeTrajet);
 		return "listetrajet";
 	}
 
 	@PostMapping("/listetrajet")
-	public String reserverUnTrajet(ListeTrajetForm listeTrajetForm, RedirectAttributes redirectAttributes, Model model) {
-		System.out.println("TrajetController:reserverUnTrajet()");
+	public String reserverUnTrajet(ListeTrajetForm listeTrajetForm, RedirectAttributes redirectAttributes,
+			Model model, Principal principal) {
+		System.out.println("TrajetController:reserverUnTrajet() IdPersonne=" + listeTrajetForm.getIdPersonne()
+				+ " IdTrajet=" + listeTrajetForm.getIdTrajet());
 
-		HTMLButtonElement bouton = listeTrajetForm.getBouton();
-		System.out.println("bouton value=" + bouton.getValue());
+		String name = principal.getName();
 		
 		
-		model.addAttribute("idPersonne", listeTrajetForm.getIdPersonne());
-		model.addAttribute("idTrajet", listeTrajetForm.getIdTrajet());
-		return "reservation";
+
+		// donner des infos au controlleur
+		redirectAttributes.addFlashAttribute("idPersonne", "1");
+		redirectAttributes.addFlashAttribute("idTrajet", listeTrajetForm.getIdTrajet());
+		// model; donne des infos à la vue
+		return "redirect:/reservation";
 	}
 }

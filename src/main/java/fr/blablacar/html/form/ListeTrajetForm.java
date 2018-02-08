@@ -3,7 +3,7 @@ package fr.blablacar.html.form;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.w3c.dom.html.HTMLButtonElement;
+
 
 public class ListeTrajetForm {
 	private Long idPersonne;
@@ -17,9 +17,7 @@ public class ListeTrajetForm {
 
 	private String villeDepart;
 	private String villeArrive;
-
-	private HTMLButtonElement bouton;
-
+	
 	public Long getIdPersonne() {
 		return idPersonne;
 	}
@@ -82,13 +80,5 @@ public class ListeTrajetForm {
 
 	public void setIdTrajet(Long idTrajet) {
 		this.idTrajet = idTrajet;
-	}
-
-	public HTMLButtonElement getBouton() {
-		return bouton;
-	}
-
-	public void setBouton(HTMLButtonElement bouton) {
-		this.bouton = bouton;
 	}
 }

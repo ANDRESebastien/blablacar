@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <div th:include="include :: ajoutCSS" />
 <title>R&eacute;servation</title>
@@ -8,48 +10,39 @@
 	<div th:replace="menu :: affichageMenu" />
 	<section class="section">
 		<div class="container">
-			
-<form action="#" th:action="@{/reservation}" th:object="${reservationForm}"
-				method="post">
-				<input type="hidden" th:field="*{idPersonne}" /> 
-				<input type="hidden" th:field="*{idTrajet}" />
+
+			<form action="#" th:action="@{/reservation}"
+				th:object="${reservationForm}" method="post">
+				<input type="hidden" th:field="*{idPersonne}" /> <input
+					type="hidden" th:field="*{idTrajet}" />
 				<table>
 					<tr>
 						<td>Ville de d&eacute;part :</td>
-						<td><span type="text" th:field="*{villeDepart}" /></td>
+						<td><span th:text="*{villeDepart}"/></td>
 					</tr>
 					<tr>
 						<td>Ville d'arriv&eacute;e :</td>
-						<td><input type="text" th:field="*{villeArrive}"
-							th:classappend="${#fields.hasErrors('villeArrive')} ? error : good " /></td>
-						<td th:if="${#fields.hasErrors('villeArrive')}"
-							th:errors="*{villeArrive}" />
+						<td><span th:text="*{villeArrive}"/></td>
 					</tr>
 					<tr>
 						<td>Jour du d&eacute;part :</td>
-						<td><input type="date" th:field="*{dateDepart}"
-							th:classappend="${#fields.hasErrors('dateDepart')} ? error : good " /></td>
-						<td th:if="${#fields.hasErrors('dateDepart')}"
-							th:errors="*{dateDepart}" />
+						<td><span th:text="*{dateDepart}"/></td>
 					</tr>
 					<tr>
 						<td>Horaire du d&eacute;part :</td>
-						<td><input type="number" th:field="*{heureDepart}"
-							th:classappend="${#fields.hasErrors('heureDepart')} ? error : good " />
-							: <input type="number" th:field="*{minuteDepart}"
-							th:classappend="${#fields.hasErrors('minuteDepart')} ? error : good " /></td>
-						<td
-							th:if="${#fields.hasErrors('heureDepart') || #fields.hasErrors('minuteDepart')}"
-							th:errors="*{heureDepart}" />
+						<td><span th:text="*{heureDepart}"/></td>
 					</tr>
 					<tr>
-						<td>Nombre de places :</td>
-						<td><input type="number" th:field="*{nombrePlace}"
-							th:classappend="${#fields.hasErrors('nombrePlace')} ? error : good " /></td>
-						<td th:if="${#fields.hasErrors('nombrePlace')}"
-							th:errors="*{nombrePlace}" />
+						<td>Nombre de places disponible :</td>
+						<td><span th:text="*{nombrePlace}"/></td>
 					</tr>
-
+					<tr>
+						<td>Nombre de places &agrave; r&eacute;server :</td>
+						<td><input type="number" th:field="*{nombrePlaceReserve}"
+							th:classappend="${#fields.hasErrors('nombrePlaceReserve')} ? error : good " /></td>
+						<td th:if="${#fields.hasErrors('nombrePlaceReserve')}"
+							th:errors="*{nombrePlaceReserve}" />
+					</tr>
 					<tr>
 						<td>
 							<button type="submit">R&eacute;server le trajet</button>
@@ -59,7 +52,7 @@
 
 				<h2 th:text="${message}"></h2>
 			</form>
-			
+
 		</div>
 	</section>
 </body>
