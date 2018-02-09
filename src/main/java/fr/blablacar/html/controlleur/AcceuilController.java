@@ -37,7 +37,7 @@ public class AcceuilController {
 		System.out.println("AcceuilController:ajouter()");
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("-> erreur technique");
+			System.out.println(bindingResult.getAllErrors());
 			// Erreur bas niveau, retour sur la page
 			return "acceuil";
 		}
