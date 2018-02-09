@@ -5,8 +5,6 @@
 <head>
 <div th:include="include :: ajoutCSS" />
 <title>Inscription</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="/css/application.css" th:href="@{/css/application.css}" />
 </head>
 <body>
 	<div th:replace="menu :: affichageMenu" />
@@ -19,19 +17,19 @@
 					<tr>
 						<td>Nom :</td>
 						<td><input type="text" th:field="*{nom}"
-							th:classappend="${#fields.hasErrors('nom')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('nom')} ? error : good "   placeholder="Votre nom" /></td>
 						<td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" />
 					</tr>
 					<tr>
 						<td>Login/Email :</td>
 						<td><input type="text" th:field="*{login}"
-							th:classappend="${#fields.hasErrors('login') || emailEnBase != null} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('login') || emailEnBase != null} ? error : good " placeholder="Votre email" /></td>
 						<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}" />
 					</tr>
 					<tr>
 						<td>Mot de passe :</td>
 						<td><input type="password" th:field="*{password}"
-							th:classappend="${#fields.hasErrors('password')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('password')} ? error : good " placeholder="Votre mot de passe" /></td>
 						<td th:if="${#fields.hasErrors('password')}"
 							th:errors="*{password}" />
 						<!--   <input type="date" th:field="*{dateDeNaissance}"/> -->

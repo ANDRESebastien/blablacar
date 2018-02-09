@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class TrajetForm {
-	private Long idPersonne;
+	
 	private Integer nombrePlace;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -15,14 +15,6 @@ public class TrajetForm {
 
 	private String villeDepart;
 	private String villeArrive;
-
-	public Long getIdPersonne() {
-		return idPersonne;
-	}
-
-	public void setIdPersonne(Long idPersonne) {
-		this.idPersonne = idPersonne;
-	}
 
 	public Integer getNombrePlace() {
 		return nombrePlace;

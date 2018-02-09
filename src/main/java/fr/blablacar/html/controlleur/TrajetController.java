@@ -33,28 +33,26 @@ public class TrajetController {
 	@GetMapping("/trajet")
 	public String trajet(TrajetForm trajetForm, Model model) {
 		System.out.println("TrajetController:trajet()");
-		model.addAttribute("idPersonne", trajetForm.getIdPersonne());
 		return "trajet";
 	}
 
 	@GetMapping("/reservation")
-	public String reservation(ReservationForm reservationForm, Model model,
-			@ModelAttribute("idPersonne") String idPersonne, @ModelAttribute("idTrajet") String idTrajet) {
-
-		System.out.println("TrajetController:reservation() idPersonne=" + idPersonne + " idTrajet=" + idTrajet);
+	public String reservation(ReservationForm reservationForm, Principal principal, Model model,
+			@ModelAttribute("idTrajet") String idTrajet) {
+		System.out.println("TrajetController:reservation() idTrajet=" + idTrajet);
+		
+		long identifiantTrajet = Long.parseLong(idTrajet);
+		
+		String email = principal.getName();
+		Personne personne = personneService.rechercher(email);
 
 		try {
-			long identifiantPersonne = Long.parseLong(idPersonne);
-			long identifiantTrajet = Long.parseLong(idTrajet);
-
-			if (identifiantPersonne > 0 && identifiantTrajet > 0) {
-				reservationForm.setIdPersonne(identifiantPersonne);
+			if (identifiantTrajet > 0) {
 				reservationForm.setIdTrajet(identifiantTrajet);
 
-				Personne personne = personneService.rechercher(identifiantPersonne);
 				Trajet trajet = trajetService.rechercher(identifiantTrajet);
 
-				if (trajet.getConducteur().getIdPersonne() == personne.getIdPersonne()) {
+				if (trajet.getConducteur().getIdPersonne() != personne.getIdPersonne()) {
 					reservationForm.setVilleDepart(trajet.getVilleDepart());
 					reservationForm.setVilleArrive(trajet.getVilleArrive());
 					reservationForm.setNombrePlace(trajet.getNombrePlace());
@@ -66,51 +64,49 @@ public class TrajetController {
 			System.out.println("Exception " + e.getMessage());
 			return "redirect:/";
 		}
-		//model.addAttribute("idPersonne", idPersonne);
 		return "redirect:/listetrajet";
 	}
 
 	@PostMapping("/reservation")
 	public String ajouterReservation(ReservationForm reservationForm, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, Model model) {
-		System.out.println("TrajetController:ajouterReservation() IdPersonne=" + reservationForm.getIdPersonne()
-				+ " IdTrajet=" + reservationForm.getIdTrajet());
+			RedirectAttributes redirectAttributes, Model model, Principal principal) {
+		System.out.println("TrajetController:ajouterReservation() IdTrajet=" + reservationForm.getIdTrajet());
 		
-		
-		Personne personne = personneService.rechercher(reservationForm.getIdPersonne());
+		Personne personne = personneService.rechercher(principal.getName());
 		Trajet trajet = trajetService.rechercher(reservationForm.getIdTrajet());
 		personne = personneService.ajouterReservation(personne.getIdPersonne(), trajet.getIdTrajet(), reservationForm.getNombrePlaceReserve());
 		
-		
-		
-		model.addAttribute("reservationForm", reservationForm);
+
+		//redirectAttributes.addFlashAttribute("reservationForm", reservationForm);
 		model.addAttribute("message", personne.getPrenom() +" merci d'avoir réservé le trajet pour " + trajet.getVilleArrive());
 		return "reservation";
 	}
 
 	@PostMapping("/trajet")
 	public String ajouterTrajet(@Valid TrajetForm trajetForm, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, Model model) {
+			RedirectAttributes redirectAttributes, Model model,
+			Principal principal) {
 		System.out.println("TrajetController:ajouterTrajet()");
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("-> erreur technique");
+			System.out.println("-> erreur technique : " + bindingResult.getAllErrors());
 			// Erreur bas niveau, retour sur la page
 			return "trajet";
 		}
 
 		// Controle métier
-		Personne personne = personneService.ajouterTrajet(trajetForm.getIdPersonne(), trajetForm.getNombrePlace(),
-				trajetForm.getVilleDepart(), trajetForm.getVilleArrive());
-
+		Personne personne = personneService.rechercher(principal.getName());
 		if (personne == null) {
 			model.addAttribute("message", "Aucun utilisateur connecté");
 			return "trajet";
 		}
+		
+		personne = personneService.ajouterTrajet(personne.getIdPersonne(), trajetForm.getNombrePlace(),
+				trajetForm.getVilleDepart(), trajetForm.getVilleArrive());
 
+		
 		// Si OK passage à la page suivante avec argument
 		model.addAttribute("message", "Trajet ajouté");
-		model.addAttribute("idPersonne", trajetForm.getIdPersonne());
 		return "trajet";
 	}
 
@@ -119,23 +115,16 @@ public class TrajetController {
 		System.out.println("TrajetController:listetrajet()");
 		Iterable<Trajet> listeDeTrajet = trajetService.lister();
 
-		model.addAttribute("idPersonne", listeTrajetForm.getIdPersonne());
 		model.addAttribute("listeDeTrajet", listeDeTrajet);
 		return "listetrajet";
 	}
 
 	@PostMapping("/listetrajet")
-	public String reserverUnTrajet(ListeTrajetForm listeTrajetForm, RedirectAttributes redirectAttributes,
-			Model model, Principal principal) {
-		System.out.println("TrajetController:reserverUnTrajet() IdPersonne=" + listeTrajetForm.getIdPersonne()
-				+ " IdTrajet=" + listeTrajetForm.getIdTrajet());
-
-		String name = principal.getName();
-		
-		
+	public String reserverUnTrajet(ListeTrajetForm listeTrajetForm, RedirectAttributes redirectAttributes, Model model,
+			Principal principal) {
+		System.out.println("TrajetController:reserverUnTrajet() IdTrajet=" + listeTrajetForm.getIdTrajet());
 
 		// donner des infos au controlleur
-		redirectAttributes.addFlashAttribute("idPersonne", "1");
 		redirectAttributes.addFlashAttribute("idTrajet", listeTrajetForm.getIdTrajet());
 		// model; donne des infos à la vue
 		return "redirect:/reservation";

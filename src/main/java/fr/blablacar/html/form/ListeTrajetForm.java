@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class ListeTrajetForm {
-	private Long idPersonne;
 	private Long idTrajet;
 	private Integer nombrePlace;
 
@@ -17,14 +16,6 @@ public class ListeTrajetForm {
 
 	private String villeDepart;
 	private String villeArrive;
-	
-	public Long getIdPersonne() {
-		return idPersonne;
-	}
-
-	public void setIdPersonne(Long idPersonne) {
-		this.idPersonne = idPersonne;
-	}
 
 	public Integer getNombrePlace() {
 		return nombrePlace;

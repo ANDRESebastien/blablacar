@@ -22,9 +22,8 @@
 				<tr th:each="trajet : ${listeDeTrajet}">
 					<form action="#" th:action="@{/listetrajet}"
 						th:object="${listeTrajetForm}" method="post">
-						<input type="hidden" th:field="${listeTrajetForm.idPersonne}" id="'idPersonne' + ${trajet.idTrajet}" />
-						<input type="hidden" th:value="${trajet.idTrajet}" id="'idTrajet' + ${trajet.idTrajet}"
-							name="'idTrajet' + ${trajet.idTrajet}" />
+						<input type="hidden" th:id="'idTrajet' + ${trajet.idTrajet}" th:name="idTrajet" 
+							th:value="${trajet.idTrajet}" />
 						<td th:text="${trajet.idTrajet}" />
 						<td th:text="${trajet.villeDepart}" />
 						<td th:text="${trajet.villeArrive}" />

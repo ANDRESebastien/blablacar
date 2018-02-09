@@ -13,28 +13,27 @@
 
 			<form action="#" th:action="@{/reservation}"
 				th:object="${reservationForm}" method="post">
-				<input type="hidden" th:field="*{idPersonne}" /> <input
-					type="hidden" th:field="*{idTrajet}" />
+				<input type="hidden" th:field="*{idTrajet}" />
 				<table>
 					<tr>
 						<td>Ville de d&eacute;part :</td>
-						<td><span th:text="*{villeDepart}"/></td>
+						<td><span th:text="*{villeDepart}" /></td>
 					</tr>
 					<tr>
 						<td>Ville d'arriv&eacute;e :</td>
-						<td><span th:text="*{villeArrive}"/></td>
+						<td><span th:text="*{villeArrive}" /></td>
 					</tr>
 					<tr>
 						<td>Jour du d&eacute;part :</td>
-						<td><span th:text="*{dateDepart}"/></td>
+						<td><span th:text="*{dateDepart}" /></td>
 					</tr>
 					<tr>
 						<td>Horaire du d&eacute;part :</td>
-						<td><span th:text="*{heureDepart}"/></td>
+						<td><span th:text="*{heureDepart}" /></td>
 					</tr>
 					<tr>
 						<td>Nombre de places disponible :</td>
-						<td><span th:text="*{nombrePlace}"/></td>
+						<td><span th:text="*{nombrePlace}" /></td>
 					</tr>
 					<tr>
 						<td>Nombre de places &agrave; r&eacute;server :</td>

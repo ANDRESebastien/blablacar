@@ -10,19 +10,13 @@
 	<div th:replace="menu :: affichageMenu" />
 	<section class="section">
 		<div class="container">
-			<form action="#" th:action="@{/acceuil}" th:object="${acceuilForm}"
-				method="post">
-				<input type="hidden" id="idPersonne" name="idPersonne"
-					th:field="*{idPersonne}" />
-				<p>
-
-					<a th:href="@{/trajet(idPersonne=*{idPersonne})}">Ajouter un
-						trajet</a>
-				</p>
-				<p>
-					<a th:href="@{/listetrajet(idPersonne=*{idPersonne})}">R&eacute;server un trajet parmis les trajets</a>
-				</p>
-			</form>
+			<p>
+				<a th:href="@{/trajet}">Ajouter un trajet</a>
+			</p>
+			<p>
+				<a th:href="@{/listetrajet}">R&eacute;server un trajet parmis
+					les trajets</a>
+			</p>
 		</div>
 	</section>
 </body>

@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ReservationForm {
-	private Long idPersonne;
 	private Long idTrajet;
 	private Integer nombrePlace;
 
@@ -18,14 +17,6 @@ public class ReservationForm {
 	private String villeArrive;
 
 	private Integer nombrePlaceReserve;
-
-	public Long getIdPersonne() {
-		return idPersonne;
-	}
-
-	public void setIdPersonne(Long idPersonne) {
-		this.idPersonne = idPersonne;
-	}
 
 	public Integer getNombrePlace() {
 		return nombrePlace;

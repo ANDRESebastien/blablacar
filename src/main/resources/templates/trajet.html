@@ -5,9 +5,6 @@
 <head>
 <div th:include="include :: ajoutCSS" />
 <title>Trajet</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="/css/application.css" th:href="@{/css/application.css}" />
-
 </head>
 <body>
 	<div th:replace="menu :: affichageMenu" />
@@ -15,36 +12,34 @@
 		<div class="container">
 			<form action="#" th:action="@{/trajet}" th:object="${trajetForm}"
 				method="post">
-				<input type="hidden" id="idPersonne" name="idPersonne"
-					th:field="*{idPersonne}" />
 				<table>
 					<tr>
 						<td>Ville de d&eacute;part :</td>
 						<td><input type="text" th:field="*{villeDepart}"
-							th:classappend="${#fields.hasErrors('villeDepart')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('villeDepart')} ? error : good "   placeholder="ville de départ ex:Nantes" /></td>
 						<td th:if="${#fields.hasErrors('villeDepart')}"
 							th:errors="*{villeDepart}" />
 					</tr>
 					<tr>
 						<td>Ville d'arriv&eacute;e :</td>
 						<td><input type="text" th:field="*{villeArrive}"
-							th:classappend="${#fields.hasErrors('villeArrive')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('villeArrive')} ? error : good "  placeholder="ville d'arrivée ex:Paris" /></td>
 						<td th:if="${#fields.hasErrors('villeArrive')}"
 							th:errors="*{villeArrive}" />
 					</tr>
 					<tr>
 						<td>Jour du d&eacute;part :</td>
 						<td><input type="date" th:field="*{dateDepart}"
-							th:classappend="${#fields.hasErrors('dateDepart')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('dateDepart')} ? error : good "  placeholder="JJ/MM/SSAA" /></td>
 						<td th:if="${#fields.hasErrors('dateDepart')}"
 							th:errors="*{dateDepart}" />
 					</tr>
 					<tr>
 						<td>Horaire du d&eacute;part :</td>
 						<td><input type="number" th:field="*{heureDepart}"
-							th:classappend="${#fields.hasErrors('heureDepart')} ? error : good " />
+							th:classappend="${#fields.hasErrors('heureDepart')} ? error : good "  placeholder="Heure de départ format 24H"/>
 							: <input type="number" th:field="*{minuteDepart}"
-							th:classappend="${#fields.hasErrors('minuteDepart')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('minuteDepart')} ? error : good "  placeholder="minute du départ"/></td>
 						<td
 							th:if="${#fields.hasErrors('heureDepart') || #fields.hasErrors('minuteDepart')}"
 							th:errors="*{heureDepart}" />
@@ -52,7 +47,7 @@
 					<tr>
 						<td>Nombre de places :</td>
 						<td><input type="number" th:field="*{nombrePlace}"
-							th:classappend="${#fields.hasErrors('nombrePlace')} ? error : good " /></td>
+							th:classappend="${#fields.hasErrors('nombrePlace')} ? error : good "   placeholder="nombre de place disponible"/></td>
 						<td th:if="${#fields.hasErrors('nombrePlace')}"
 							th:errors="*{nombrePlace}" />
 					</tr>

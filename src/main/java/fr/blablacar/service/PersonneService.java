@@ -29,6 +29,11 @@ public class PersonneService {
 		Personne personne = this.personneRepository.findOne(idPersonne);
 		return personne;
 	}
+	
+	public Personne rechercher(String nomPersonne) {
+		Personne personne = this.personneRepository.findByEmail(nomPersonne);
+		return personne;
+	}
 
 	public Iterable<Personne> lister() {
 		Iterable<Personne> listePersonne = this.personneRepository.findAll();
@@ -54,7 +59,7 @@ public class PersonneService {
 	}
 
 	public Personne ajouter(Personne personne) {
-		if (this.personneRepository.findByEmail(personne.getEmail()) == null) {
+		if (this.rechercher(personne.getEmail()) == null) {
 			return this.personneRepository.save(personne);
 		}
 		return null;

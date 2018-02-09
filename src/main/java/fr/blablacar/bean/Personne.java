@@ -41,7 +41,7 @@ public class Personne {
 	private Date dateDeNaissance;
 
 	private double note;
-	private boolean authentifie;
+	private boolean active;
 
 	@OneToMany(mappedBy = "conducteur")
 	private List<Trajet> listeTrajet;
@@ -51,7 +51,7 @@ public class Personne {
 
 	public Personne() {
 		this.note = -1;
-		this.authentifie = false;
+		this.active = false;
 	}
 
 	public String toString() {
@@ -107,11 +107,11 @@ public class Personne {
 	}
 
 	public boolean isAuthentifie() {
-		return this.authentifie;
+		return this.active;
 	}
 
 	public void setAuthentifie(boolean authentifie) {
-		this.authentifie = authentifie;
+		this.active = authentifie;
 	}
 
 	public List<Trajet> getListeTrajet() {
