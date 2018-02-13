@@ -17,47 +17,48 @@ public class WebSecuriteConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 				.antMatchers("/", "/inscription", "/connexion", "/api/**", "/console/**", "/css/**").permitAll()
-				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-				.defaultSuccessUrl("/acceuil").and().logout().permitAll().and().headers().frameOptions().sameOrigin()
+				.anyRequest().authenticated().and()
+				.formLogin().loginPage("/login").permitAll()
+				.defaultSuccessUrl("/acceuil").and()
+				.logout().permitAll()
+				.and().headers().frameOptions().sameOrigin()
 				.httpStrictTransportSecurity().disable();
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
-		 //auth.inMemoryAuthentication().withUser("moi").password("monmdp").roles("USER");
-		
-		auth.jdbcAuthentication().dataSource(dataSource).withUser("moi").password("mdp").roles("ADMIN");
-		
 		auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery("select username, password, enabled from Users where username = ?")
-		.authoritiesByUsernameQuery("select username, role from Roles where username = ?");
-		
-		
-		
+		.usersByUsernameQuery("select username, password, enabled from \"Users\" where username = ?")
+		.authoritiesByUsernameQuery("select username, role from \"Roles\" where username = ?");
 		
 		/*
+		auth.inMemoryAuthentication().withUser("seba").password("mdp").roles("USER");
+		auth.jdbcAuthentication().dataSource(dataSource).withUser("moi").password("mdp").roles("ADMIN");
 		
-CREATE TABLE `Users` (
-  `username` varchar(20) NOT NULL DEFAULT '',
-  `password` varchar(20) NOT NULL DEFAULT '',
-  `enabled` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE "Users" (
+  "username" varchar(20) NOT NULL,
+  "password" varchar(20) NOT NULL,
+  "enabled" bool NOT NULL DEFAULT true,
+  PRIMARY KEY ("username")
+);
 
-CREATE TABLE `Roles` (
-  `username` varchar(20) NOT NULL DEFAULT '',
-  `role` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`username`,`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE "Roles" (
+  "username" varchar(20) NOT NULL,
+  "role" varchar(20) NOT NULL,
+  PRIMARY KEY ("username","role"),
+  FOREIGN KEY (username) REFERENCES users (username)
+);
 
-INSERT INTO `Users` (`username`, `password`, `enabled`)
+
+
+INSERT INTO "Users" ("username", "password", "enabled")
 VALUES
-	('moi', 'mdp', 1);
+	("seba", "mdp", true);
 
-INSERT INTO `Roles` (`username`, `role`)
+INSERT INTO "Roles" ("username", "role")
 VALUES
-	('moi', 'Admin'),
-	('moi', 'CEO');
+	("seba", "Admin"),
+	("seba", "CEO");
 
 commit;
 		*/

@@ -1,6 +1,6 @@
 package fr.blablacar.bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -37,8 +35,7 @@ public class Personne {
 	private String prenom;
 
 	@JsonFormat(pattern="yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date dateDeNaissance;
+	private LocalDate dateDeNaissance;
 
 	private double note;
 	private boolean active;
@@ -122,11 +119,11 @@ public class Personne {
 		this.listeTrajet = listeTrajet;
 	}
 
-	public Date getDateDeNaissance() {
+	public LocalDate getDateDeNaissance() {
 		return this.dateDeNaissance;
 	}
 
-	public void setDateDeNaissance(Date dateDeNaissance) {
+	public void setDateDeNaissance(LocalDate dateDeNaissance) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 

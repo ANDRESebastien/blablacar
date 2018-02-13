@@ -1,6 +1,6 @@
 package fr.blablacar.html.form;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,7 +9,7 @@ public class TrajetForm {
 	private Integer nombrePlace;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dateDepart;
+	private LocalDate dateDepart;
 	private Short heureDepart;
 	private Short minuteDepart;
 
@@ -24,11 +24,11 @@ public class TrajetForm {
 		this.nombrePlace = nombrePlace;
 	}
 
-	public Date getDateDepart() {
+	public LocalDate getDateDepart() {
 		return dateDepart;
 	}
 
-	public void setDateDepart(Date dateDepart) {
+	public void setDateDepart(LocalDate dateDepart) {
 		this.dateDepart = dateDepart;
 	}
 

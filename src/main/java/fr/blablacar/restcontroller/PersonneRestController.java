@@ -1,6 +1,8 @@
 package fr.blablacar.restcontroller;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +36,7 @@ public class PersonneRestController {
 	@PostMapping("{email}/{motDePasse}/{nom}/{prenom}")
 	public Personne ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
 			@PathVariable("nom") String nom, @PathVariable("prenom") String prenom,
-			@PathVariable("dateDeNaissance") Date dateDeNaissance) {
+			@PathVariable("dateDeNaissance") LocalDate dateDeNaissance) {
 		System.out.println("PersonneRestController:ajouter(email=" + email + ", motDePasse=" + motDePasse + ", nom="
 				+ nom + ", prenom=" + prenom + ", dateDeNaissance=" + dateDeNaissance + ")");
 		return this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
@@ -43,16 +45,24 @@ public class PersonneRestController {
 	@PostMapping
 	public Personne ajouter(@RequestBody Personne personne) {
 		System.out.println("PersonneRestController:ajouter(personne.getNom()=" + personne.getNom()
-				+ " personne.getEmail()=" + personne.getEmail() + " personne.getDateDeNaissance()=" + personne.getDateDeNaissance() + ")");
+				+ " personne.getEmail()=" + personne.getEmail() + " personne.getDateDeNaissance()="
+				+ personne.getDateDeNaissance() + ")");
 		return this.personneService.ajouter(personne);
 	}
 
-	@PostMapping("/trajet/{idPersonne}/{nombrePlace}/{villeDepart}/{villeArrive}")
+	@PostMapping("/trajet/{idPersonne}/{nombrePlace}/{villeDepart}/{villeArrive}/{dateDepart}/{heureDepart}")
 	public Personne ajouterTrajet(@PathVariable("idPersonne") long idPersonne,
 			@PathVariable("nombrePlace") int nombrePlace, @PathVariable("villeDepart") String villeDepart,
-			@PathVariable("villeArrive") String villeArrive) {
-		System.out.println("PersonneRestController:ajouterTrajet()");
-		return this.personneService.ajouterTrajet(idPersonne, nombrePlace, villeDepart, villeArrive);
+			@PathVariable("villeArrive") String villeArrive, @PathVariable("dateDepart") String sDateDepart,
+			@PathVariable("heureDepart") String sHeureDepart) {
+		System.out.println(
+				"PersonneRestController:ajouterTrajet() sDateDepart=" + sDateDepart + " sHeureDepart=" + sHeureDepart);
+
+		LocalDate dateDepart = LocalDate.parse(sDateDepart, DateTimeFormatter.ofPattern("uuuu-MM-dd"));
+		LocalTime heureDepart = LocalTime.parse(sHeureDepart, DateTimeFormatter.ofPattern("HH:mm"));
+
+		return this.personneService.ajouterTrajet(idPersonne, nombrePlace, villeDepart, villeArrive, dateDepart,
+				heureDepart);
 	}
 
 	@PostMapping("/reservation/{idPersonne}/{idTrajet}/{nombrePlaceReserve}")

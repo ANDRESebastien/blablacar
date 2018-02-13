@@ -4,21 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.blablacar.bean.Reservation;
-import fr.blablacar.repository.PersonneRepository;
 import fr.blablacar.repository.ReservationRepository;
-import fr.blablacar.repository.TrajetRepository;
 
 @Service
 public class ReservationService {
 
 	@Autowired
 	ReservationRepository reservationRepository;
-
-	@Autowired
-	PersonneRepository personneRepository;
-
-	@Autowired
-	TrajetRepository trajetRepository;
 
 	public Reservation rechercher(long idTrajet) {
 		Reservation reservation = this.reservationRepository.findOne(idTrajet);

@@ -18,6 +18,8 @@ import fr.blablacar.service.PersonneService;
 import fr.blablacar.service.TrajetService;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.validation.Valid;
 
@@ -101,8 +103,10 @@ public class TrajetController {
 			return "trajet";
 		}
 		
+		LocalTime localTime=LocalTime.of(trajetForm.getHeureDepart(),trajetForm.getHeureDepart());
+		
 		personne = personneService.ajouterTrajet(personne.getIdPersonne(), trajetForm.getNombrePlace(),
-				trajetForm.getVilleDepart(), trajetForm.getVilleArrive());
+				trajetForm.getVilleDepart(), trajetForm.getVilleArrive(), trajetForm.getDateDepart(),localTime);
 
 		
 		// Si OK passage à la page suivante avec argument

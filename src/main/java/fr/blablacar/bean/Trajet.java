@@ -1,5 +1,7 @@
 package fr.blablacar.bean;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,12 @@ public class Trajet {
 
 	@NotBlank
 	private String villeArrive;
+
+	@NotBlank
+	private LocalDate dateDepart;
+
+	@NotBlank
+	private LocalTime heureDepart;
 
 	@OneToMany(mappedBy = "trajet")
 	private List<Reservation> listeReservation;
@@ -92,5 +100,21 @@ public class Trajet {
 
 	public void setVilleArrive(String villeArrive) {
 		this.villeArrive = villeArrive;
+	}
+
+	public LocalDate getDateDepart() {
+		return dateDepart;
+	}
+
+	public void setDateDepart(LocalDate dateDepart) {
+		this.dateDepart = dateDepart;
+	}
+
+	public LocalTime getHeureDepart() {
+		return heureDepart;
+	}
+
+	public void setHeureDepart(LocalTime heureDepart) {
+		this.heureDepart = heureDepart;
 	}
 }

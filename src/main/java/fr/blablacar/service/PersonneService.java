@@ -1,7 +1,9 @@
 package fr.blablacar.service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,7 @@ public class PersonneService {
 		Personne personne = this.personneRepository.findOne(idPersonne);
 		return personne;
 	}
-	
+
 	public Personne rechercher(String nomPersonne) {
 		Personne personne = this.personneRepository.findByEmail(nomPersonne);
 		return personne;
@@ -40,7 +42,7 @@ public class PersonneService {
 		return listePersonne;
 	}
 
-	public Personne ajouter(String nom ,String login, String password) {
+	public Personne ajouter(String nom, String login, String password) {
 		Personne personne = new Personne();
 		personne.setNom(nom);
 		personne.setEmail(login);
@@ -48,7 +50,7 @@ public class PersonneService {
 		return this.ajouter(personne);
 	}
 
-	public Personne ajouter(String email, String motDePasse, String nom, String prenom, Date dateDeNaissance) {
+	public Personne ajouter(String email, String motDePasse, String nom, String prenom, LocalDate dateDeNaissance) {
 		Personne personne = new Personne();
 		personne.setEmail(email);
 		personne.setMotDePasse(motDePasse);
@@ -70,7 +72,8 @@ public class PersonneService {
 	}
 
 	@Transactional
-	public Personne ajouterTrajet(long idPersonne, int nombrePlace, String villeDepart, String villeArrive) {
+	public Personne ajouterTrajet(long idPersonne, int nombrePlace, String villeDepart, String villeArrive,
+			LocalDate dateDepart, LocalTime heureDepart) {
 		Personne personne = this.rechercher(idPersonne);
 		if (personne != null) {
 			Trajet trajet = new Trajet();
@@ -78,6 +81,8 @@ public class PersonneService {
 			trajet.setNombrePlace(nombrePlace);
 			trajet.setVilleDepart(villeDepart);
 			trajet.setVilleArrive(villeArrive);
+			trajet.setDateDepart(dateDepart);
+			trajet.setHeureDepart(heureDepart);
 			this.trajetRepository.save(trajet);
 			return personne;
 		} else {
@@ -105,5 +110,4 @@ public class PersonneService {
 		}
 		return personne;
 	}
-
 }
