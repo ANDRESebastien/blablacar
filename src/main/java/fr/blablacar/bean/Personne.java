@@ -32,8 +32,8 @@ public class Personne {
 
 	private String prenom;
 
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	//@JsonFormat(pattern = "yyyy-MM-dd")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateDeNaissance;
 
 	private double note;
@@ -53,7 +53,8 @@ public class Personne {
 	}
 
 	public String toString() {
-		return "idPersonne=" + idPersonne + ";nom=" + nom + ";email=" + email + ";prenom=" + prenom;
+		return "idPersonne=" + idPersonne + ";nom=" + nom + ";email=" + email + ";prenom=" + prenom
+				+ ";dateDeNaissance=" + dateDeNaissance;
 	}
 
 	public long getIdPersonne() {

@@ -18,7 +18,6 @@ import fr.blablacar.service.PersonneService;
 import fr.blablacar.service.TrajetService;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.validation.Valid;
@@ -42,9 +41,9 @@ public class TrajetController {
 	public String reservation(ReservationForm reservationForm, Principal principal, Model model,
 			@ModelAttribute("idTrajet") String idTrajet) {
 		System.out.println("TrajetController:reservation() idTrajet=" + idTrajet);
-		
+
 		long identifiantTrajet = Long.parseLong(idTrajet);
-		
+
 		String email = principal.getName();
 		Personne personne = personneService.rechercher(email);
 
@@ -73,21 +72,21 @@ public class TrajetController {
 	public String ajouterReservation(ReservationForm reservationForm, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes, Model model, Principal principal) {
 		System.out.println("TrajetController:ajouterReservation() IdTrajet=" + reservationForm.getIdTrajet());
-		
+
 		Personne personne = personneService.rechercher(principal.getName());
 		Trajet trajet = trajetService.rechercher(reservationForm.getIdTrajet());
-		personne = personneService.ajouterReservation(personne.getIdPersonne(), trajet.getIdTrajet(), reservationForm.getNombrePlaceReserve());
-		
+		personne = personneService.ajouterReservation(personne.getIdPersonne(), trajet.getIdTrajet(),
+				reservationForm.getNombrePlaceReserve());
 
-		//redirectAttributes.addFlashAttribute("reservationForm", reservationForm);
-		model.addAttribute("message", personne.getPrenom() +" merci d'avoir réservé le trajet pour " + trajet.getVilleArrive());
+		// redirectAttributes.addFlashAttribute("reservationForm", reservationForm);
+		model.addAttribute("message",
+				personne.getPrenom() + " merci d'avoir réservé le trajet pour " + trajet.getVilleArrive());
 		return "reservation";
 	}
 
 	@PostMapping("/trajet")
 	public String ajouterTrajet(@Valid TrajetForm trajetForm, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, Model model,
-			Principal principal) {
+			RedirectAttributes redirectAttributes, Model model, Principal principal) {
 		System.out.println("TrajetController:ajouterTrajet()");
 
 		if (bindingResult.hasErrors()) {
@@ -102,16 +101,15 @@ public class TrajetController {
 			model.addAttribute("message", "Aucun utilisateur connecté");
 			return "trajet";
 		}
-		
+
 		System.out.print(" date de départ = ");
 		System.out.println(trajetForm.getDateDepart());
-		
-		LocalTime localTime=LocalTime.of(trajetForm.getHeureDepart(),trajetForm.getHeureDepart());
-		
+
+		LocalTime localTime = LocalTime.of(trajetForm.getHeureDepart(), trajetForm.getHeureDepart());
+
 		personne = personneService.ajouterTrajet(personne.getIdPersonne(), trajetForm.getNombrePlace(),
 				trajetForm.getVilleDepart(), trajetForm.getVilleArrive(), trajetForm.getDateDepart(), localTime);
 
-		
 		// Si OK passage à la page suivante avec argument
 		model.addAttribute("message", "Trajet ajouté");
 		return "trajet";

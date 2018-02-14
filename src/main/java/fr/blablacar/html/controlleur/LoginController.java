@@ -19,5 +19,4 @@ public class LoginController {
 	public String connexion(ConnexionForm connexionForm, Model model) {
 		return "login";
 	}
-
 }

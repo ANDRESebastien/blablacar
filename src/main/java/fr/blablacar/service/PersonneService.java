@@ -3,7 +3,6 @@ package fr.blablacar.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +56,8 @@ public class PersonneService {
 		personne.setMotDePasse(motDePasse);
 		personne.setDateDeNaissance(dateDeNaissance);
 		personne.setPrenom(prenom);
+		System.out.println("PersonneService:ajouter(" + personne.getNom() + ", " + personne.getEmail() + ", "
+				+ personne.getMotDePasse() + ", " + personne.getDateDeNaissance() + ", " + personne.getPrenom() + ")");
 		return this.ajouter(personne);
 	}
 
