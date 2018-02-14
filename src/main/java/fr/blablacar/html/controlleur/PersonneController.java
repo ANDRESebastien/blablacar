@@ -38,9 +38,9 @@ public class PersonneController {
 		}
 
 		// Controle métier
-
-		Personne personne = personneService.ajouter(inscriptionForm.getNom(), inscriptionForm.getLogin(),
-				inscriptionForm.getPassword());
+		
+		Personne personne = personneService.ajouter(inscriptionForm.getNom(),inscriptionForm.getLogin(), 
+				inscriptionForm.getPassword(),inscriptionForm.getDateDeNaissance(),inscriptionForm.getPrenom());
 
 		if (personne == null) {
 			System.out.println("-> email déjà présent en base");

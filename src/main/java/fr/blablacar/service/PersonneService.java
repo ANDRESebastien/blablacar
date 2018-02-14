@@ -42,21 +42,21 @@ public class PersonneService {
 		return listePersonne;
 	}
 
-	public Personne ajouter(String nom, String login, String password) {
+	public Personne ajouter(String nom, String email, String motDePasse) {
 		Personne personne = new Personne();
 		personne.setNom(nom);
-		personne.setEmail(login);
-		personne.setMotDePasse(password);
+		personne.setEmail(email);
+		personne.setMotDePasse(motDePasse);
 		return this.ajouter(personne);
 	}
 
-	public Personne ajouter(String email, String motDePasse, String nom, String prenom, LocalDate dateDeNaissance) {
+	public Personne ajouter(String nom, String email, String motDePasse, LocalDate dateDeNaissance, String prenom) {
 		Personne personne = new Personne();
+		personne.setNom(nom);
 		personne.setEmail(email);
 		personne.setMotDePasse(motDePasse);
-		personne.setNom(nom);
-		personne.setPrenom(prenom);
 		personne.setDateDeNaissance(dateDeNaissance);
+		personne.setPrenom(prenom);
 		return this.ajouter(personne);
 	}
 

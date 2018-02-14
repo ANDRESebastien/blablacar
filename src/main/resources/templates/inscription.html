@@ -12,28 +12,48 @@
 		<div class="container">
 			<form action="#" th:action="@{/}" th:object="${inscriptionForm}"
 				method="post">
-				
+
 				<table>
-					<tr>
-						<td>Nom :</td>
-						<td><input type="text" th:field="*{nom}"
-							th:classappend="${#fields.hasErrors('nom')} ? error : good "   placeholder="Votre nom" /></td>
-						<td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" />
-					</tr>
+
 					<tr>
 						<td>Login/Email :</td>
 						<td><input type="text" th:field="*{login}"
-							th:classappend="${#fields.hasErrors('login') || emailEnBase != null} ? error : good " placeholder="Votre email" /></td>
+							th:classappend="${#fields.hasErrors('login') || emailEnBase != null} ? error : good "
+							placeholder="Votre email" /></td>
 						<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}" />
 					</tr>
 					<tr>
 						<td>Mot de passe :</td>
 						<td><input type="password" th:field="*{password}"
-							th:classappend="${#fields.hasErrors('password')} ? error : good " placeholder="Votre mot de passe" /></td>
+							th:classappend="${#fields.hasErrors('password')} ? error : good "
+							placeholder="Votre mot de passe" /></td>
 						<td th:if="${#fields.hasErrors('password')}"
 							th:errors="*{password}" />
 						<!--   <input type="date" th:field="*{dateDeNaissance}"/> -->
 					</tr>
+										<tr>
+						<td>Nom :</td>
+						<td><input type="text" th:field="*{nom}"
+							th:classappend="${#fields.hasErrors('nom')} ? error : good "
+							placeholder="Votre nom" /></td>
+						<td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" />
+					</tr>
+															<tr>
+						<td>Prénom :</td>
+						<td><input type="text" th:field="*{prenom}"
+							th:classappend="${#fields.hasErrors('prenom')} ? error : good "
+							placeholder="Votre prénom" /></td>
+						<td th:if="${#fields.hasErrors('prenom')}" th:errors="*{nom}" />
+					</tr>
+					<tr>
+						<td>Date de Naissance :</td>
+						<td><input type="date" th:field="*{dateDeNaissance}"
+							th:classappend="${#fields.hasErrors('dateDeNaissance')} ? error : good "
+							placeholder="JJ/MM/SSAA" /></td>
+						<td th:if="${#fields.hasErrors('dateDeNaissance')}"
+							th:errors="*{dateDeNaissance}" />
+					</tr>
+
 					<tr>
 						<td>
 							<button type="submit">S'inscrire</button>

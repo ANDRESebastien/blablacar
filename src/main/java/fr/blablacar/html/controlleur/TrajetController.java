@@ -103,10 +103,13 @@ public class TrajetController {
 			return "trajet";
 		}
 		
+		System.out.print(" date de départ = ");
+		System.out.println(trajetForm.getDateDepart());
+		
 		LocalTime localTime=LocalTime.of(trajetForm.getHeureDepart(),trajetForm.getHeureDepart());
 		
 		personne = personneService.ajouterTrajet(personne.getIdPersonne(), trajetForm.getNombrePlace(),
-				trajetForm.getVilleDepart(), trajetForm.getVilleArrive(), trajetForm.getDateDepart(),localTime);
+				trajetForm.getVilleDepart(), trajetForm.getVilleArrive(), trajetForm.getDateDepart(), localTime);
 
 		
 		// Si OK passage à la page suivante avec argument

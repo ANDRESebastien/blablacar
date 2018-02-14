@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +34,15 @@ public class PersonneRestController {
 		return this.personneService.lister();
 	}
 
-	@PostMapping("{email}/{motDePasse}/{nom}/{prenom}")
+	@PostMapping("{email}/{motDePasse}/{nom}/{prenom}/{dateDeNaissance}")
 	public Personne ajouter(@PathVariable("email") String email, @PathVariable("motDePasse") String motDePasse,
 			@PathVariable("nom") String nom, @PathVariable("prenom") String prenom,
-			@PathVariable("dateDeNaissance") LocalDate dateDeNaissance) {
+			@PathVariable("dateDeNaissance") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate dateDeNaissance) {
+		
 		System.out.println("PersonneRestController:ajouter(email=" + email + ", motDePasse=" + motDePasse + ", nom="
 				+ nom + ", prenom=" + prenom + ", dateDeNaissance=" + dateDeNaissance + ")");
-		return this.personneService.ajouter(email, motDePasse, nom, prenom, dateDeNaissance);
+		
+		return this.personneService.ajouter(nom, email, motDePasse, dateDeNaissance, prenom);
 	}
 
 	@PostMapping

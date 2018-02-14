@@ -5,15 +5,13 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class InscriptionForm {
-
-	@NotNull
-	@Size(min = 1)
-	private String nom;
 
 	@NotNull
 	@Size(min = 1)
@@ -23,9 +21,15 @@ public class InscriptionForm {
 	@Size(min = 4)
 	private String password;
 
+	@NotNull
+	@Size(min = 1)
+	private String nom;
+
+	private String prenom;
+
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date dateDeNaissance;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate dateDeNaissance;
 
 	public String getNom() {
 		return nom;
@@ -35,11 +39,11 @@ public class InscriptionForm {
 		this.nom = nom;
 	}
 
-	public Date getDateDeNaissance() {
+	public LocalDate getDateDeNaissance() {
 		return dateDeNaissance;
 	}
 
-	public void setDateDeNaissance(Date dateDeNaissance) {
+	public void setDateDeNaissance(LocalDate dateDeNaissance) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 
@@ -57,5 +61,13 @@ public class InscriptionForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 }

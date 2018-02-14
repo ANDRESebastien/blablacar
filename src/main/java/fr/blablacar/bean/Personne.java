@@ -10,11 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-//import lombok.Data;
-//@Data
 
 @Entity
 public class Personne {
@@ -34,7 +32,8 @@ public class Personne {
 
 	private String prenom;
 
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dateDeNaissance;
 
 	private double note;
@@ -49,6 +48,8 @@ public class Personne {
 	public Personne() {
 		this.note = -1;
 		this.active = false;
+		this.dateDeNaissance = LocalDate.of(1990, 1, 1);
+		this.prenom = "toto";
 	}
 
 	public String toString() {
