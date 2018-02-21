@@ -1,6 +1,9 @@
 package fr.blablacar.bean;
 
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,9 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Personne {
@@ -32,9 +32,9 @@ public class Personne {
 
 	private String prenom;
 
-	//@JsonFormat(pattern = "yyyy-MM-dd")
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateDeNaissance;
+	// @JsonFormat(pattern = "yyyy-MM-dd")
+	// @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dateDeNaissance;
 
 	private double note;
 	private boolean active;
@@ -48,7 +48,16 @@ public class Personne {
 	public Personne() {
 		this.note = -1;
 		this.active = false;
-		this.dateDeNaissance = LocalDate.of(1990, 1, 1);
+		// java.util.Date date = (java.util.Date) java.sql.Date.valueOf(localDate);
+		// LocalDate localDate = LocalDate.fromDateFields(date);
+		// LocalDate localDate = ((java.sql.Date)java.util.Date).toLocalDate();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			this.dateDeNaissance = dateFormat.parse("1990-01-01");
+		} catch (ParseException e) {
+			System.out.println("dateDeNaissance KO");
+		}
 		this.prenom = "toto";
 	}
 
@@ -121,11 +130,11 @@ public class Personne {
 		this.listeTrajet = listeTrajet;
 	}
 
-	public LocalDate getDateDeNaissance() {
+	public Date getDateDeNaissance() {
 		return this.dateDeNaissance;
 	}
 
-	public void setDateDeNaissance(LocalDate dateDeNaissance) {
+	public void setDateDeNaissance(Date dateDeNaissance) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 

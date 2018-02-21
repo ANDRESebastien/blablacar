@@ -107,17 +107,6 @@ public class TrajetController {
 
 		LocalTime localTime = LocalTime.of(trajetForm.getHeureDepart(), trajetForm.getHeureDepart());
 
-/*		
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR, trajetForm.getHeureDepart());
-		calendar.set(Calendar.MINUTE, trajetForm.getMinuteDepart());
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		Date newDate = calendar.getTime();
-		Time time = new Time(newDate.getTime());
-		System.out.println(time.getHours() + ":" + time.getMinutes());
-	*/	
-		
 		personne = personneService.ajouterTrajet(personne.getIdPersonne(), trajetForm.getNombrePlace(),
 				trajetForm.getVilleDepart(), trajetForm.getVilleArrive(), trajetForm.getDateDepart(), localTime);
 

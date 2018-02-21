@@ -13,9 +13,6 @@ import fr.blablacar.html.form.InscriptionForm;
 import fr.blablacar.repository.PersonneRepository;
 import fr.blablacar.service.PersonneService;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import javax.validation.Valid;
 
 @Controller
@@ -30,27 +27,6 @@ public class PersonneController {
 
 	@GetMapping({ "/", "/inscription" })
 	public String inscription(InscriptionForm inscriptionForm, Model model) {
-		
-		// Test
-		Personne personne = new Personne();
-		personne.setNom("nom");
-		personne.setEmail("email");
-		personne.setMotDePasse("motDePasse");
-		
-		//LocalDate dateDeNaissance = LocalDate.parse("1982-05-18", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		LocalDate dateDeNaissance = LocalDate.now();
-		personne.setDateDeNaissance(dateDeNaissance);
-		personne.setPrenom("prenom");
-		
-		System.out.println("avant save (" + personne.getNom() + ", " + personne.getEmail() + ", "
-				+ personne.getMotDePasse() + ", " + personne.getDateDeNaissance() + ", " + personne.getPrenom() + ")");
-		
-		personne = this.personneRepository.save(personne);
-		
-		System.out.println("inscriptiontest fin (" + personne.getNom() + ", " + personne.getEmail() + ", "
-				+ personne.getMotDePasse() + ", " + personne.getDateDeNaissance() + ", " + personne.getPrenom() + ")");
-		
-		
 		return "inscription";
 	}
 
@@ -77,6 +53,9 @@ public class PersonneController {
 			model.addAttribute("emailEnBase", "Email déjà présent en base");
 			return "inscription";
 		}
+		
+		
+		
 
 		// Si OK passage à la page suivante
 		return "redirect:/acceuil";
