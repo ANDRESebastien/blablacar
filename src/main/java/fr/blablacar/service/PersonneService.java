@@ -2,7 +2,8 @@ package fr.blablacar.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,7 +80,7 @@ public class PersonneService {
 
 	@Transactional
 	public Personne ajouterTrajet(long idPersonne, int nombrePlace, String villeDepart, String villeArrive,
-			LocalDate dateDepart, LocalTime heureDepart) {
+			LocalDate dateDepartLD, LocalTime heureDepartLT) {
 		Personne personne = this.rechercher(idPersonne);
 		if (personne != null) {
 			Trajet trajet = new Trajet();
@@ -87,12 +88,14 @@ public class PersonneService {
 			trajet.setNombrePlace(nombrePlace);
 			trajet.setVilleDepart(villeDepart);
 			trajet.setVilleArrive(villeArrive);
-			
-			
+
+			Date dateDepart = (Date) java.sql.Date.valueOf(dateDepartLD);
+			Time heureDepart = null;
+			// Time heureDepart = new Time(heureDepartLT.toNanoOfDay());
+
 			trajet.setDateDepart(dateDepart);
 			trajet.setHeureDepart(heureDepart);
-			
-			
+
 			this.trajetRepository.save(trajet);
 			return personne;
 		} else {
