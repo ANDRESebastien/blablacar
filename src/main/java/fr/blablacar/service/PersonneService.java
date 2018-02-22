@@ -1,11 +1,12 @@
 package fr.blablacar.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,14 @@ public class PersonneService {
 
 	public Personne ajouter(Personne personne) {
 		if (this.rechercher(personne.getEmail()) == null) {
+//			StandardPasswordEncoder encodeur = new StandardPasswordEncoder("secret");
+//			String motDePasseEncode = encodeur.encode(personne.getMotDePasse());
+//			personne.setMotDePasse(motDePasseEncode);
+			BCryptPasswordEncoder encodeur = new BCryptPasswordEncoder();
+			String motDePasseEncode = encodeur.encode(personne.getMotDePasse());
+			personne.setMotDePasse(motDePasseEncode);
+			
+			 
 			return this.personneRepository.save(personne);
 		}
 		return null;

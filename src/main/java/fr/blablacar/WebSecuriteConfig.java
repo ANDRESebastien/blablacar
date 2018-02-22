@@ -3,11 +3,15 @@ package fr.blablacar;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -24,17 +28,40 @@ public class WebSecuriteConfig extends WebSecurityConfigurerAdapter {
 				.and().headers().frameOptions().sameOrigin()
 				.httpStrictTransportSecurity().disable();
 	}
-
+//
+//	@Autowired
+//	private UserDetailsService userDetailsService;
+//	
+//	@Bean
+//	public DaoAuthenticationProvider authProvider() {
+//	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//	    authProvider.setUserDetailsService(userDetailsService);
+//	    authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+//	    return authProvider;
+//	}
+	
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
+	public void y(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery("select username, password, enabled from \"Users\" where username = ?")
-		.authoritiesByUsernameQuery("select username, role from \"Roles\" where username = ?");
+		.passwordEncoder(new BCryptPasswordEncoder())
+		.usersByUsernameQuery("select email as username, mot_de_passe as password, active as enabled from \"personne\" where email = ?")
+		.authoritiesByUsernameQuery("select email as username, role from \"roles\" where email = ?");
+		
 		
 		/*
 		auth.inMemoryAuthentication().withUser("seba").password("mdp").roles("USER");
 		auth.jdbcAuthentication().dataSource(dataSource).withUser("moi").password("mdp").roles("ADMIN");
 		
+CREATE TABLE "roles" (
+  "email" varchar(20) NOT NULL,
+  "role" varchar(20) NOT NULL,
+  PRIMARY KEY ("email")
+  );
+  
+ALTER Table roles Add foreign key (email) REFERENCES personne (email);
+
+  
+  
 CREATE TABLE "Users" (
   "username" varchar(20) NOT NULL,
   "password" varchar(20) NOT NULL,
@@ -49,16 +76,16 @@ CREATE TABLE "Roles" (
   FOREIGN KEY (username) REFERENCES users (username)
 );
 
+ALTER Table Roles Add foreign key (username) REFERENCES users (username);
+
+INSERT INTO "Users" (username, password, enabled)
+VALUES ('seba', 'mdp', true);
 
 
-INSERT INTO "Users" ("username", "password", "enabled")
+INSERT INTO "Roles" (username, role)
 VALUES
-	("seba", "mdp", true);
-
-INSERT INTO "Roles" ("username", "role")
-VALUES
-	("seba", "Admin"),
-	("seba", "CEO");
+	('seba', 'Admin'),
+	('seba', 'CEO');
 
 commit;
 		*/

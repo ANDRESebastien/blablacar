@@ -1,5 +1,7 @@
 package fr.blablacar.html.controlleur;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,6 @@ import fr.blablacar.bean.Personne;
 import fr.blablacar.html.form.InscriptionForm;
 import fr.blablacar.repository.PersonneRepository;
 import fr.blablacar.service.PersonneService;
-
-import javax.validation.Valid;
 
 @Controller
 public class PersonneController {

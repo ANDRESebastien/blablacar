@@ -1,8 +1,8 @@
 package fr.blablacar.bean;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
